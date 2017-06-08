@@ -122,7 +122,8 @@
     function fileChange(targetElement) {
         return function (e) {
             if(e.srcElement.files.length > 0) {
-                htmlList = [];
+                htmlList.length = 0;
+                console.log('초기화');
                 targetElement.innerHTML = '';
                 var dirPath = e.srcElement.files[0].path || '';
                 try{
@@ -137,23 +138,11 @@
         }
     }
 
-    function test(testtarget, testPath) {
-        var dirPath = testPath;
-        try{
-            var files = fs.readdirSync(dirPath);
-            files.forEach(file => {
-                htmlLoad(testtarget, dirPath, file);
-            });
-        }catch(exception) {
-            console.error(exception)
-        }
-    }
-
 
     window.addEventListener('DOMContentLoaded', () => {
         console.log('renderer process DOMContentLoaded');
+
         let targetElement = document.querySelector('#file-contents');
-        test(targetElement,'/Users/studioheydey/Documents/com.heydey.electron-html-parser/test-template');
         document.querySelector('#output-directory-input').addEventListener('change', require('./file.output')(htmlList));
         document.querySelector('#directory-file-input').addEventListener('change',fileChange(targetElement));
         document.querySelector('#menu-side-nav').addEventListener('click', function(e)  {

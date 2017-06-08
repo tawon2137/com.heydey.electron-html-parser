@@ -38,6 +38,7 @@ function getSubCodeInsertData(htmlData, subCodeData) {
 
 
 module.exports = function (htmlList) {
+
     return function (e) {
         console.log(htmlList);
         var blockData = fs.readFileSync(blockfilePath,'utf-8');
@@ -72,10 +73,13 @@ module.exports = function (htmlList) {
                 });
             }));
         }
-
-        Promise.all(promises)
-            .then(() => twCom.fn.toast('파일작성이 완료되었습니다.', 4000))
-            .catch(error => twCom.fn.toast('파일작성이 실패하였습니다.', 4000));
+        if(promises.length > 0) {
+            Promise.all(promises)
+                .then(() => twCom.fn.toast('파일작성이 완료되었습니다.', 4000))
+                .catch(error => twCom.fn.toast('파일작성이 실패하였습니다.', 4000));
+        }else {
+            twCom.fn.toast('작성할 파일이 존재하지않습니다.', 4000);
+        }
     }
 };
 
