@@ -1,7 +1,7 @@
 (function () {
     "use strict";
     var path = require('path');
-    var fs = require('fs');
+    var fs = require('./lib/fs.promise');
     var cheerio = require('cheerio');
     var global = require('./global');
     var htmlList = [];
@@ -11,6 +11,7 @@
         mode: 'htmlmixed',
         readOnly: true
     };
+
 
     function getMirror(htmlObject) {
         if(typeof htmlObject === 'object' ){
@@ -41,67 +42,71 @@
         };
     }
 
-    function htmlLoad(targetElement, dirName, fileName) {
+    function htmlLoad(dirName, fileName) {
         var readPromise = global.getHtmlFile(dirName, fileName);
+        return readPromise;
+    }
 
-        readPromise.then(htmlValue => {
-            if(htmlValue) {
+    function viewHtmlFile(targetElement, dirName){
+        var fileNames = fs.readdirSync(dirName);
+        return function (arr) {
+            arr.forEach((htmlValue, index) => {
+                if(htmlValue) {
+                    var file = {
+                        'fileName': fileNames[index],
+                        'dirName': dirName,
+                        'html' : htmlValue,
+                        '$' : cheerio.load(htmlValue, { decodeEntities: false })
+                    };
 
-                var file = {
-                    'fileName': fileName,
-                    'dirName': dirName,
-                    'html' : htmlValue,
-                    '$' : cheerio.load(htmlValue, { decodeEntities: false })
-                };
-                var card = document.createElement('div');
-                var content = document.createElement('div');
-                var action = document.createElement('div');
-                var title = document.createElement('div');
-                var htmlContent = document.createElement('div');
-                // var updateBtn = document.createElement('a'); 수정버튼 임시보류
-                var saveBtn = document.createElement('a');
+                    var card = document.createElement('div');
+                    var content = document.createElement('div');
+                    var action = document.createElement('div');
+                    var title = document.createElement('div');
+                    var htmlContent = document.createElement('div');
+                    // var updateBtn = document.createElement('a'); 수정버튼 임시보류
+                    var saveBtn = document.createElement('a');
 
-                card.classList.add('card');
+                    card.classList.add('card');
 
-                content.classList.add('card-content');
-                title.classList.add('card-title');
-                action.classList.add('card-action');
+                    content.classList.add('card-content');
+                    title.classList.add('card-title');
+                    action.classList.add('card-action');
 
-                htmlContent.classList.add('code-wrapper');
-                htmlContent.classList.add('modal-content');
+                    htmlContent.classList.add('code-wrapper');
+                    htmlContent.classList.add('modal-content');
 
-                title.textContent = file.path;
-
-
-                htmlContent.setAttribute('data-code-index', htmlList.length);
-
-                // updateBtn.className = 'tw-btn waves-effect indigo-d-3 white-text';
-                // updateBtn.textContent = '수정';
-                // updateBtn.setAttribute('data-target', 'updateModal');
-                // updateBtn.addEventListener('click', setEditHtml(htmlContent, htmlValue));
+                    title.textContent = file.path;
 
 
-                saveBtn.className = 'tw-btn waves-effect indigo-d-3 white-text';
-                saveBtn.textContent = '저장';
-                saveBtn.addEventListener('click', saveHtml(htmlContent));
+                    htmlContent.setAttribute('data-code-index', htmlList.length);
+
+                    // updateBtn.className = 'tw-btn waves-effect indigo-d-3 white-text';
+                    // updateBtn.textContent = '수정';
+                    // updateBtn.setAttribute('data-target', 'updateModal');
+                    // updateBtn.addEventListener('click', setEditHtml(htmlContent, htmlValue));
 
 
-                content.appendChild(htmlContent);
-                action.appendChild(saveBtn);
-                card.appendChild(title);
-                card.appendChild(content);
-                card.appendChild(action);
-                targetElement.appendChild(card);
+                    saveBtn.className = 'tw-btn waves-effect indigo-d-3 white-text';
+                    saveBtn.textContent = '저장';
+                    saveBtn.addEventListener('click', saveHtml(htmlContent));
 
-                var codeArea = CodeMirror(htmlContent, mirrorOption);
-                codeArea.setValue(htmlValue);
-                file.mirror = codeArea;
-                htmlList.push(file);
-                twCom.form.reload();
-            }
-        }).catch(function (err) {
-           throw err;
-        });
+
+                    content.appendChild(htmlContent);
+                    action.appendChild(saveBtn);
+                    card.appendChild(title);
+                    card.appendChild(content);
+                    card.appendChild(action);
+                    targetElement.appendChild(card);
+
+                    var codeArea = CodeMirror(htmlContent, mirrorOption);
+                    codeArea.setValue(htmlValue);
+                    file.mirror = codeArea;
+                    htmlList.push(file);
+                    twCom.form.reload();
+                }
+            });
+        }
     }
 
     var Modaloption =  {
@@ -123,17 +128,20 @@
         return function (e) {
             if(e.srcElement.files.length > 0) {
                 htmlList.length = 0;
-                console.log('초기화');
                 targetElement.innerHTML = '';
                 var dirPath = e.srcElement.files[0].path || '';
-                try{
-                    var files = fs.readdirSync(dirPath);
-                    files.forEach(file => {
-                        htmlLoad(targetElement, dirPath, file);
-                    });
-                }catch(exception) {
-                    console.log(exception)
-                }
+                var fileNames;
+                fs.readdirAsync(dirPath)
+                    .then(result => {
+                        var arr = [];
+                        result.forEach(file => arr.push(htmlLoad(dirPath, file)));
+                        fileNames = result;
+                        return Promise.all(arr);
+                    })
+                    .then(viewHtmlFile(targetElement, dirPath))
+                    .catch(error => {
+                        console.log(error);
+                    })
             }
         }
     }

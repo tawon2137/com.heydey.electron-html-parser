@@ -1,6 +1,6 @@
     "use strict";
     var path = require('path');
-    var fs = require('fs');
+    var fs = require('./lib/fs.promise');
     var cheerio = require('cheerio');
     var blockfilePath = path.join(__dirname, '../code.config/code-block.json');
     var global = require('./global');
@@ -27,7 +27,7 @@
 
         //파일있는지없는지 여부체크
         if (!global.fileCheck(blockfilePath)) {
-            fs.writeFileSync(blockfilePath, '');
+            fs.writeFileAsync(blockfilePath, '')
         }
 
 

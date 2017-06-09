@@ -1,46 +1,333 @@
-<!DOCTYPE html><html lang="en"><head>
-    <meta charset="UTF-8">
-    <title>파싱 테스트용 파일 2</title>
+<link rel="stylesheet" type="text/css" href="http://imgheydey.cafe24.com/by/css/community.css">
+<head>
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+                document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '170391626627508'); // Insert your pixel ID here.
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+                   src="https://www.facebook.com/tr?id=170391626627508&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- DO NOT MODIFY -->
+    <!-- End Facebook Pixel Code -->
 </head>
-<body>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd<div>약속한 태그 </div></div>
-<div>asd<div>약속한 태그 </div></div>
-<div>asd<div>약속한 태그 </div></div>
-<div>asd<div>약속한 태그 </div></div>
-<div>asd<div>약속한 태그 </div></div>
-<div>asd<div>약속한 태그 </div></div>
-<div>asd<div>약속한 태그 </div></div>
-<div>asd<div>약속한 태그 </div></div>
-<div>asd<div>약속한 태그 </div></div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asda의 치환코드 입니다.a소문자의 치환코드</div>
-<div>asd</div>
-<div>asda의 치환코드 입니다.a소문자의 치환코드</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asda의 치환코드 입니다.a소문자의 치환코드</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
-<div>asd</div>
+<!-- facebook -->
+<script>
+    fbq('track', 'Purchase', {
+        value: 247.35,
+        currency: 'USD'
+    });
+</script>
 
-</body></html>
+<div id="wrap">
+    <!--/include_header(1)/-->
+    <div id="contentWrapper">
+        <div id="contentWrap">
+            <!--/include_menu(1)/-->
+            <div id="content">
+                <div id="order">
+                    <dl class="loc-navi">
+                        <dt class="blind">현재 위치</dt>
+                        <dd><a href="/">home</a> &gt; 주문서 완료</dd>
+                    </dl>
+                    <h2 class="tit-page">
+                        <img src="/images/d3/modern_simple/order_page_tit.gif" alt="order sheet" title="order sheet" />
+                        <span class="dsc">주문정보를 확인하신 후, <em>주문확인</em>을 눌러주세요</span>
+                    </h2>
+                    <div class="page-body">
+                        <h3 class="stit"><img src="/images/d3/modern_simple/order_order_prd_tit.gif" alt="주문상품" title="주문상품" /></h3>
+                        <div class="table-cart table-order-prd">
+                            <table summary="구입 상품명, 수량, 가격, 적립">
+                                <caption>주문 상품</caption>
+                                <colgroup>
+                                    <col width="70" />
+                                    <col width="*" />
+                                    <col width="70" />
+                                    <col width="90" />
+                                    <col width="90" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th scope="col"><div class="tb-center"></div></th>
+                                    <th scope="col"><div class="tb-center">구입 상품명</div></th>
+                                    <th scope="col"><div class="tb-right">수량</div></th>
+                                    <th scope="col"><div class="tb-right">가격</div></th>
+                                    <th scope="col"><div class="tb-right">적립</div></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!--/loop_order_product/-->
+                                <!--/if_idx(1)/-->
+                                <tr class="nbg">
+                                    <!--/else/-->
+                                <tr>
+                                    <!--/end_if/-->
+                                    <td>
+                                        <div class="tb-center">
+                                            <!--/if_order_product@image_s/-->
+                                            <img src="<!--/order_product@image_s/-->" width="40" />
+                                            <!--/end_if/-->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="tb-left tb-bold">
+                                            <!--/if_order_product@provider_icon/--><img src ="<!--/order_product@provider_icon/-->"><!--/end_if/-->
+                                            <!--/if_order_product@link/-->
+                                            <a href="<!--/order_product@link/-->"><!--/order_product@name(100)/--></a>
+                                            <!--/else/-->
+                                            <!--/order_product@name(100)/-->
+                                            <!--/end_if/-->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="tb-right"><!--/order_product@amount/-->개</div>
+                                    </td>
+                                    <td>
+                                        <div class="tb-right tb-bold"><!--/number/order_product@price/-->원</div>
+                                    </td>
+                                    <td>
+                                        <div class="tb-right">
+                                            <!--/if_order_product@reserve/-->
+                                            <!--/number/order_product@reserve/-->
+                                            <!--/end_if/-->
+                                            <!--/if_order_product@point/-->
+                                            <!--/order_product@point/-->
+                                            <!--/end_if/-->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!--/if_order_product@option/-->
+                                <tr class="nbg">
+                                    <td colspan="5">
+                                        <div class="tb-left">
+                                            <!--/order_product@option/-->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!--/end_if/-->
+                                <!--/end_loop/-->
+
+                                <!--/if_group_dc_message/-->
+                                <tr>
+                                    <td><div class="tb-left"></div></td>
+                                    <td>
+                                        <div class="tb-left">
+                                            <!--/if_group_icon/--><img src="<!--/group_icon/-->" /><!--/end_if/-->
+                                            <!--/group_name/-->
+                                        </div>
+                                    </td>
+                                    <td colspan="3"><div class="tb-right"><!--/group_dc_message/--></div></td>
+                                </tr>
+                                <!--/end_if/-->
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="tb-right">
+                                            결제금액 :
+                                            <strong><!--/total_price/--></strong>
+                                            <!--/if_total_reserve(+1)/-->(적립금 <!--/number/total_reserve/-->원)<!--/end_if/-->
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div><!-- .table-order-prd -->
+
+                        <h3 class="stit"><img src="/images/d3/modern_simple/order_pay_tit.gif" alt="결제 방법" title="결제 방법" /></h3>
+                        <div class="cnt-box">
+                            <p><!--/pay_method/--><br /><!--/pay_info/--></p>
+                            <!--/if_bank_name/-->
+                            <p>입금자명 : <span class="bank_name"><!--/bank_name/--></span></p>
+                            <!--/end_if/-->
+                        </div><!-- .cnt-box -->
+
+                        <h3 class="stit"><img src="/images/d3/modern_simple/order_user_info_tit.gif" alt="주문자 정보" title="주문자 정보" /></h3>
+                        <div class="table-order-info">
+                            <table summary="">
+                                <caption>주문자 정보</caption>
+                                <colgroup>
+                                    <col width="90" />
+                                    <col width="*" />
+                                    <col width="90" />
+                                    <col width="*" />
+                                </colgroup>
+                                <tbody>
+                                <tr class="nbg">
+                                    <th scope="row"><div class="tb-right">이 름</div></th>
+                                    <td colspan="3">
+                                        <div class="tb-left">
+                                            <!--/sender/-->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><div class="tb-right">E-mail</div></th>
+                                    <td>
+                                        <div class="tb-left">
+                                            <!--/sender_email/-->
+                                        </div>
+                                    </td>
+                                    <th scope="row"><div class="tb-right">연락처</div></th>
+                                    <td>
+                                        <div class="tb-left">
+                                            <!--/sender_tel/-->
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 class="stit"><img src="/images/d3/modern_simple/order_delivery_info_tit.gif" alt="배송지 정보" title="배송지 정보" /></h3>
+                        <div class="table-order-info">
+                            <table summary="이름, 연락처1, 연락처2, 주소, 주문메세지">
+                                <caption>배송지 정보</caption>
+                                <colgroup>
+                                    <col width="90" />
+                                    <col width="*" />
+                                    <col width="80" />
+                                    <col width="*" />
+                                    <col width="80" />
+                                    <col width="*" />
+                                </colgroup>
+                                <tbody>
+                                <tr class="nbg">
+                                    <th scope="row"><div class="tb-right">이 름</div></th>
+                                    <td>
+                                        <div class="tb-left">
+                                            <!--/receiver/-->
+                                        </div>
+                                    </td>
+                                    <th scope="row"><div class="tb-right">연락처1</div></th>
+                                    <td>
+                                        <div class="tb-left">
+                                            <!--/receiver_tel/-->
+                                        </div>
+                                    </td>
+                                    <th scope="row"><div class="tb-right">연락처2</div></th>
+                                    <td>
+                                        <div class="tb-left">
+                                            <!--/receiver_mobile/-->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><div class="tb-right">주소</div></th>
+                                    <td colspan="5">
+                                        <div class="tb-left">
+                                            <!--/receiver_addr/-->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="tb-right">
+                                            주문메시지
+                                            <em class="d-block">(100자내외)</em>
+                                        </div>
+                                    </th>
+                                    <td colspan="5">
+                                        <div class="tb-left">
+                                            <!--/order_message/-->
+                                            <!--/if_add_info/-->
+                                            <!--/loop_add_info/-->
+                                            <div><!--/add_info@title/--> : <!--/add_info@value/--></div>
+                                            <!--/end_loop/-->
+                                            <!--/end_if/-->
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="admin-msg"><!--/admin_message/--></div>
+                        <div class="btn-foot">
+                            <a href="<!--/link_print/-->"><img src="/images/d3/modern_simple/btn/btn_h36_print.gif" alt="프린트하기" title="프린트하기" /></a>
+                            <a href="<!--/link_complete/-->"><img src="/images/d3/modern_simple/btn/btn_h36_order_check.gif" alt="주문확인" title="주문확인" /></a>
+                            <!--/if_link_gift/-->
+                            <a href="<!--/link_gift/-->"><img src="/images/d3/modern_simple/btn/btn_h36_gift_choice.gif" alt="사은품선택" title="사은품선택" /></a>
+                            <!--/end_if/-->
+                        </div>
+
+                    </div><!-- .page-body -->
+                </div><!-- #order -->
+            </div><!-- #content -->
+        </div><!-- #contentWrap -->
+    </div><!-- #contentWrapper-->
+    <hr />
+    <!--/include_footer(1)/-->
+</div><!-- #wrap -->
+
+
+<!--20170609 애드썸 스크립트 확인-->
+<SCRIPT LANGUAGE="JavaScript">
+    <!--
+    //  컨버전 ID (수정하지 마세요)
+    var _SEED_CID = "522";
+
+    /*
+     - _SEED_UN
+     - 컨버전 전환 번호(주문번호, 예약번호 등등)
+     - 컨버전 전환의 중복을 허용하지 않을 경우 입력
+     - 선택사항(입력하지 않으셔도 됩니다) 이지만 정확한 컨버전 전환 측정을 위해 입력하시길 권장합니다.
+     */
+    var _SEED_UN= $(".admin-msg > span").text();
+    console.log("_SEED_UN : "+_SEED_UN);
+
+    /*********************************** Section # 1 *********************************************************
+     1.  컨버전 전환(상품구매, 회원가입, 예약완료 등등)의 횟수만 측정 할 경우 여기까지 입력 하시기 바랍니다.
+     : 컨버전의 상세정보(매출액, 판매된 상품, 단가, 수량 등등)는 필요없고 단지 전환 횟수만을 측정하길 원할 경우
+     *********************************** Section # 1 *********************************************************/
+
+
+
+
+    /* 전체 매출액 */
+    var totalPriceDom = document.createElement('div');
+    $(totalPriceDom).html('<!--/total_price/-->');
+    var priceNum = Number($(totalPriceDom).find('#mk_totalprice').text().replace('원', '').split(',').join(''));
+    var _SEED_AMT = priceNum;
+
+
+    console.log('<!--/total_price/-->');
+    /******************************** Section # 2 (Section # 1 포함) ***************************************************
+     2.  컨버전 전환 (상품구매, 회원가입, 예약완료 등등)의 횟수 및 전체 매출액 을 측정 할 경우 여기까지 입력 하시기 바랍니다.
+     : 컨버전의 부가정보(판매된 상품, 단가, 수량 등등)는 필요없고 전환 횟수와 전체 매출액만을 측정하길 원할 경우
+     ******************************** Section # 2 (Section # 1 포함) ***************************************************/
+
+
+
+    /* 판매된 상품이름 (복수일 경우 ; 로 구분) */
+    var _SEED_INAME = "";
+
+    /* 각 판매된 상품의 단가 (복수일 경우 ; 로 구분) */
+    var _SEED_IPRICE = "";
+
+    /* 각 판매된 상품의 수량 (복수일 경우 ; 로 구분) */
+    var _SEED_QTY = "";
+
+    /*
+     - 각 판매된 상품의 그룹 (복수일 경우 ; 로 구분)
+     - 선택사항(입력하지 않으셔도 됩니다)
+     */
+    var _SEED_CT= "";
+    <!--/loop_order_product/-->
+    _SEED_INAME += '<!--/order_product@name(100)/-->;';
+    _SEED_IPRICE += '<!--/order_product@price/-->;';
+    _SEED_QTY += '<!--/order_product@amount/-->;';
+    <!--/end_loop/-->
+    _SEED_INAME = _SEED_INAME.substr(0, _SEED_INAME.length - 1);
+    _SEED_IPRICE = _SEED_IPRICE.substr(0, _SEED_IPRICE.length - 1);
+    _SEED_QTY = _SEED_QTY.substr(0, _SEED_QTY.length - 1);
+    console.log('상품명',_SEED_INAME);
+    console.log('가격',_SEED_IPRICE);
+    console.log('수량',_SEED_QTY);
+    //-->
+</SCRIPT>

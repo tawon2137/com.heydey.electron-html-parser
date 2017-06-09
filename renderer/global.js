@@ -1,4 +1,4 @@
-    var fs = require('fs');
+    var fs = require('./lib/fs.promise');
     var path = require('path');
 
 
@@ -13,23 +13,14 @@
 
     global.getHtmlFile = function (dirName, fileName) {
         var fullPath = path.join(dirName, fileName);
-
         if(this.isHtmlFile(fullPath)) {
-            return new Promise(function (fullfiild, reject) {
-                fs.readFile(fullPath, 'utf-8', function (err, data) {
-                    if (err) {
-                        reject(err);
-                        return;
-                    }
-                    fullfiild(data);
-                });
-            });
+            return fs.readFileAsync(fullPath, 'utf-8');
         }else {
             return null;
         }
     };
 
-    //부모엘리먼트 카드엘리먼트 찾기
+    //상위 엘리먼트중에 인자로받은 className 엘리먼트가 있는지 찾기
     global.getRootElement = function(element, className) {
         while(element) {
             if(element.classList.contains(className)) {
