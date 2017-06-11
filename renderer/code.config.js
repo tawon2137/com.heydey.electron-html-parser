@@ -22,6 +22,7 @@
             twCom.fn.toast(`(${key})치환코드를 삭제했습니다.`, 2000);
         }
     }
+
     function createCodeElementList(codeObj) {
         "use strict";
         var arr = [];
@@ -54,6 +55,7 @@
         }
         return arr;
     }
+
 
     function createSubCode(e) {
         var trigger = e.target;
@@ -96,6 +98,7 @@
         if(!global.fileCheck(configfilePath)) {
             fs.writeFileSync(configfilePath);
         }
+
         document.querySelector('#create-code').addEventListener('click', createSubCode);
 
         var fileData = fs.readFileSync(configfilePath, 'utf-8');
