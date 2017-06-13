@@ -126,3 +126,8 @@ typings/
 
 
 # End of https://www.gitignore.io/api/node,intellij
+
+# 테스트용 템플릿 제거
+test-template/*
+output/*
+.imi

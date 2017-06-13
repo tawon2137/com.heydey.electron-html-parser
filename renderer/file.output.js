@@ -1,57 +1,20 @@
+"use strict";
+
 var path = require('path');
-var fs = require('fs');
-var cheerio = require('cheerio');
+var fs = require('./lib/fs.promise');
 var global = require('./global');
-var configfilePath = path.join(__dirname, '../code.config/code-config.json');
-var blockfilePath = path.join(__dirname, '../code.config/code-block.json');
-
-
-var regExp = new RegExp('{{\\w*}}', 'g');
-function getBlockInsertData($, blockData) {
-    "use strict";
-
-    for(var prop in blockData) {
-        $(`*[${prop}]`).append(blockData[prop]);
-        $(`*[${prop}]`).removeAttr(`${prop}`);
-    }
-    return $.html();
-}
-
-function getSubCodeInsertData(htmlData, subCodeData) {
-    if(!regExp.test(htmlData)) return htmlData;
-    var arr = [];
-    var matches = htmlData.match(regExp);
-    for(var i = 0, len = matches.length; i < len; i++) {
-        if(subCodeData[matches[i]]) {
-            htmlData = htmlData.replace(matches[i], subCodeData[matches[i]]);
-        }else {
-            arr.push(matches[i]);
-        }
-    }
-
-    if(arr.length > 0) {
-        twCom.fn.toast(`${matches.join(',')} 치환코드가 메모리상에 등록되있지않습니다.`, 5000);
-    }
-
-    return htmlData;
-}
+var converterHtml = require('./html.converter');
 
 
 module.exports = function (htmlList) {
-    return function (e) {
-        console.log(htmlList);
-        var blockData = fs.readFileSync(blockfilePath,'utf-8');
-        var subCodeData = fs.readFileSync(configfilePath, 'utf-8');
-        subCodeData = subCodeData ? JSON.parse(subCodeData) : {};
-        blockData = blockData ? JSON.parse(blockData) : {};
 
-        try {
-            var outputPath = e.target.files[0].path;
-            var currentReadPath = document.querySelector('#directory-file-input').files[0].path;
-        }catch(exception) {
-            twCom.fn.toast(`선택된 파일경로가 없습니다.${exception.message ? exception.message : ''}`, 4000);
-            return false;
-        }
+    return function (e) {
+        var configData = global.getConfigData();
+        var converterData = global.readConverterData(`${configData.converterFilePath}`);
+        var blockData = global.readBlockData(`${configData.blockFilePath}`);
+
+        var outputPath = configData.outputDir;
+        var currentReadPath = configData.targetDir;
 
 
         if(outputPath === currentReadPath) {
@@ -59,24 +22,27 @@ module.exports = function (htmlList) {
             return false;
         }
 
-
         var promises = [];
         for(var key in htmlList) {
-            var htmlData = getBlockInsertData(htmlList[key].$, blockData);
-            htmlData = getSubCodeInsertData(htmlData, subCodeData);
-            promises.push(new Promise((fullfield, reject) => {
-                "use strict";
-                fs.writeFile(path.join(outputPath, htmlList[key].fileName), htmlData, (err) => {
-                   if(err) reject(err)
-                   else fullfield();
-                });
-            }));
+            var htmlData = converterHtml(htmlList[key], converterData, blockData);
+            for(var i = 0; i < htmlData.length; i++) {
+                var fileName = Object.keys(htmlData[i])[0];
+                if(path.extname(fileName) === '.html') {
+                    promises.push(fs.writeFileAsync(path.join(outputPath, fileName), htmlData[i][fileName]));
+                }
+            }
         }
 
-        Promise.all(promises)
-            .then(() => twCom.fn.toast('파일작성이 완료되었습니다.', 4000))
-            .catch(error => twCom.fn.toast('파일작성이 실패하였습니다.', 4000));
+        if(promises.length > 0) {
+            Promise.all(promises)
+                .then(() => twCom.fn.toast('파일작성이 완료되었습니다.', 4000))
+                .catch(error => twCom.fn.toast(`파일작성이 실패하였습니다.${error.message || ''}`, 4000));
+        }else {
+            twCom.fn.toast('작성할 파일이 존재하지않습니다.', 4000);
+        }
     }
 };
+
+
 
 

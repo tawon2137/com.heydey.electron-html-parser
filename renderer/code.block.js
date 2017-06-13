@@ -1,17 +1,12 @@
     "use strict";
     var path = require('path');
-    var fs = require('fs');
+    var fs = require('./lib/fs.promise');
     var cheerio = require('cheerio');
     var blockfilePath = path.join(__dirname, '../code.config/code-block.json');
     var global = require('./global');
     var addblock;
 
-
-
-
-
     function readCodeblock(mainElement) {
-
         document.querySelector('#create-block').addEventListener('click', codeBlockAdd);
         var mirrorOption = {
             lineNumbers: true,
@@ -27,7 +22,7 @@
 
         //파일있는지없는지 여부체크
         if (!global.fileCheck(blockfilePath)) {
-            fs.writeFileSync(blockfilePath, '');
+            fs.writeFileAsync(blockfilePath, '')
         }
 
 

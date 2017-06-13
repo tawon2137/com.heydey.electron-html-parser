@@ -30,7 +30,7 @@
         height: 60px;
       }
 
-      #directory-file-input, #output-directory-input {
+      #directory-file-input, #output-directory-input, #code-config-form *[type="file"] {
         position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0;
       }
       #directory-file-label{
@@ -41,7 +41,7 @@
         margin-right: 2rem;
         z-index: 888;
       }
-      #output-directory-label {
+      #output-directory-btn {
         position: fixed;
         bottom: 0;
         left: 0;
@@ -67,7 +67,7 @@
           padding-left: 0; }
         main {
           padding-left: 0; }
-        #output-directory-label {
+        #output-directory-btn {
           margin-left: 2rem;
         }
       }
@@ -75,11 +75,11 @@
       @media only screen and (max-width: 720px) {
         .side-nav-logo {
           font-size: 1.5rem; }  }
-
       .addForm {
         position: fixed; bottom: 0; width: 80%; margin: auto; left:0; right: 0; padding-left: 200px;
         z-index: 888;
       }
+
     </style>
   </head>
   <body>
@@ -87,15 +87,15 @@
     <div id="menu-side-nav" class="tw-sideNav fixed black-text white" >
       <div class="side-nav-logo"><img src="image/logo_sm.png"></div>
       <a class="waves-effect menu active" data-wavecolor="green" data-main-target="html-list" >파일 선택 & 수정</a>
-      <a class="waves-effect menu" data-wavecolor="green" data-main-target="code-block" >코드 블록 설정</a>
-      <a class="waves-effect menu" data-wavecolor="green" data-main-target="code-config" >치환코드 관리</a>
+      <!--<a class="waves-effect menu" data-wavecolor="green" data-main-target="code-block" >코드 블록 설정</a>-->
+      <a class="waves-effect menu" data-wavecolor="green" data-main-target="code-config" >경로 설정</a>
     </div>
     <div class="tw-navbar grey-d-1-text titleBar" >
       <ul class="container">
         <li class="logoTitle right">
           <img src="image/logo.png">
         </li>
-        <li class="waves-effect show-m" data-sidenav="menuSideNav" data-trigger="open" ><i class="fa fa-bars" aria-hidden="true"></i></li>
+        <li class="waves-effect show-m" data-sidenav="menu-side-nav" data-trigger="open" ><i class="fa fa-bars" aria-hidden="true"></i></li>
       </ul>
     </div>
   </header>
@@ -110,11 +110,9 @@
       </div>
     </div>
 
-    <input id="output-directory-input" type="file" webkitdirectory directory />
-    <label id="output-directory-label" class="tw-btn indigo-d-3 white-text" for="output-directory-input">치환코드 템플릿 HTML 파일변환</label>
+    <!--<input id="output-directory-input" type="file" webkitdirectory directory />-->
+    <a id="output-directory-btn" class="tw-btn indigo-d-3 white-text" >치환코드 템플릿 HTML 파일변환</a>
 
-    <input id="directory-file-input" type="file" webkitdirectory directory />
-    <label id="directory-file-label" class="tw-btn indigo-d-3 white-text" for="directory-file-input">html 파일 불러오기</label>
   </main>
 
 
@@ -124,7 +122,7 @@
 
     <div class="row addForm" >
       <div class="card col s12" >
-        <form>
+        <form onsubmit="return false">
           <div class="tw-input-field col s3">
             <input type="text" name="name" >
             <label class="input-field-label">블록명</label>
@@ -147,28 +145,36 @@
   <!-- 코드블록 편집내용관리 -->
   <main id="code-config" style="display: none;" >
     <div class="row container">
-    </div>
+      <h1 class="col s12">설정</h1>
+      <form id="code-config-form">
+        <div class="tw-input-field col s9">
+          <input type="file" id="config-form-target-directory"  webkitdirectory directory >
+          <input type="text" name="template-directory" readonly placeholder="템플릿 파일 폴더 지정" >
+          <hr class="focusline">
+        </div>
+        <label class="tw-btn col s2 indigo-a-3 white-text" for="config-form-target-directory" style="margin-top: 10px;">선택</label>
+        <div class="tw-input-field col s9">
+          <input type="file" id="config-form-output-directory" webkitdirectory directory >
+          <input type="text" name="output-directory" readonly placeholder="HTML 파일 출력폴더 선택" >
+          <hr class="focusline">
+        </div>
+        <label class="tw-btn col s2 indigo-a-3 white-text" for="config-form-output-directory" style="margin-top: 10px;">선택</label>
 
+        <div class="tw-input-field col s9">
+          <input type="file" id="config-form-converter-path">
+          <input type="text" name="converter-path" readonly placeholder="변환데이터 엑셀파일 선택">
+          <hr class="focusline">
+        </div>
+        <label class="tw-btn col s2 indigo-a-3 white-text" for="config-form-converter-path" style="margin-top: 10px;">선택</label>
 
-    <div class="row addForm">
-      <div class="card col s12" class="code-form" >
-        <form>
-          <div class="tw-input-field col s3">
-            <input type="text" name="name" >
-            <label class="input-field-label">치환코드</label>
-            <hr class="focusline">
-          </div>
-
-          <div class="tw-input-field col s6">
-            <input type="text" name="code" >
-            <label class="input-field-label">내용</label>
-            <hr class="focusline">
-          </div>
-          <div class="card-action col s3" style="text-align: right">
-            <a class="tw-btn-clear waves-effect " data-wavecolor="black" id="create-code" >치환코드 추가</a>
-          </div>
-        </form>
-      </div>
+        <div class="tw-input-field col s9">
+          <input type="file" id="config-form-block-path" >
+          <input type="text" name="block-path" readonly placeholder="블록 설정엑셀파일 선택" >
+          <hr class="focusline">
+        </div>
+        <label class="tw-btn col s2 indigo-a-3 white-text" for="config-form-block-path" style="margin-top: 10px;">선택</label>
+        <a class="tw-btn col s12 indigo-a-3 white-text" id="config-form-save">저장</a>
+      </form>
     </div>
   </main>
 
