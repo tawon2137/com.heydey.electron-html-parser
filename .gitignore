@@ -130,4 +130,5 @@ typings/
 # 테스트용 템플릿 제거
 test-template/*
 output/*
-.imi
+# iml파일 제거
+.iml
