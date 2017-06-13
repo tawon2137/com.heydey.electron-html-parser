@@ -6,12 +6,7 @@
     var global = require('./global');
     var addblock;
 
-
-
-
-
     function readCodeblock(mainElement) {
-
         document.querySelector('#create-block').addEventListener('click', codeBlockAdd);
         var mirrorOption = {
             lineNumbers: true,
