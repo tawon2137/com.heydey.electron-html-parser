@@ -2,7 +2,7 @@
     var path = require('path');
     var fs = require('./lib/fs.promise');
     var cheerio = require('cheerio');
-    var blockfilePath = path.join(__dirname, '../code.config/code-block.json');
+    var blockfilePath = path.join(__dirname, '../config/code-block.json');
     var global = require('./global');
     var addblock;
 
@@ -20,7 +20,7 @@
             addblock = CodeMirror(document.querySelector('#block-code'), mirrorOption);
         }
 
-        //파일있는지없는지 여부체크
+        //파일있는지없는지 여부체크v
         if (!global.fileCheck(blockfilePath)) {
             fs.writeFileAsync(blockfilePath, '')
         }

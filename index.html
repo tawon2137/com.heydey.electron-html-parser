@@ -41,7 +41,7 @@
         margin-right: 2rem;
         z-index: 888;
       }
-      #output-directory-btn {
+      #output-directory-btn, #block-form-show {
         position: fixed;
         bottom: 0;
         left: 0;
@@ -67,7 +67,7 @@
           padding-left: 0; }
         main {
           padding-left: 0; }
-        #output-directory-btn {
+        #output-directory-btn,  #block-form-show {
           margin-left: 2rem;
         }
       }
@@ -87,7 +87,7 @@
     <div id="menu-side-nav" class="tw-sideNav fixed black-text white" >
       <div class="side-nav-logo"><img src="image/logo_sm.png"></div>
       <a class="waves-effect menu active" data-wavecolor="green" data-main-target="html-list" >파일 선택 & 수정</a>
-      <!--<a class="waves-effect menu" data-wavecolor="green" data-main-target="code-block" >코드 블록 설정</a>-->
+      <a class="waves-effect menu" data-wavecolor="green" data-main-target="code-block" >코드 블록 설정</a>
       <a class="waves-effect menu" data-wavecolor="green" data-main-target="code-config" >경로 설정</a>
     </div>
     <div class="tw-navbar grey-d-1-text titleBar" >
@@ -134,9 +134,11 @@
           </div>
           <div class="card-action" style="text-align: right">
             <a class="tw-btn-clear waves-effect " data-wavecolor="black" id="create-block" >블록 추가</a>
+            <a class="tw-btn-clear waves-effect " data-wavecolor="black" id="block-form-hide" >숨기기</a>
           </div>
         </form>
       </div>
+      <a class="tw-btn waves-effect indigo-d-3 white-text" data-wavecolor="black" id="block-form-show" style="display: none;">블록 입력하기</a>
     </div>
   </main>
 
