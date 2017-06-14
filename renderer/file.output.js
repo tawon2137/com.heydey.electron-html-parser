@@ -10,8 +10,8 @@ module.exports = function (htmlList) {
 
     return function (e) {
         var configData = global.getConfigData();
-        var converterData = global.readConverterData(`${configData.converterFilePath}`);
-        var blockData = global.readBlockData(`${configData.blockFilePath}`);
+        var converterData = global.jsonFileRead(`${configData.converterFilePath}`);
+        var blockData = global.jsonFileRead(`${configData.blockFilePath}`);
 
         var outputPath = configData.outputDir;
         var currentReadPath = configData.targetDir;

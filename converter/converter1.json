@@ -1,0 +1,288 @@
+{
+  "fileName" : "test1.html",
+  "{{aa}}" : "aa입니다",
+  "outFiles" : [
+    {
+      "out" : "test.html",
+      "container1" : {
+        "children" : [
+          {
+            "blockName" : "test-visual",
+            "{{visual_text}}" : "COUPLE 简爱空间<br />爱，就是给对方更多的空间",
+            "{{visual_sub_text}}" : "중국사람들 싫어"
+          }
+        ]
+      },
+      "container2" : {
+        "children" : [
+          {
+            "blockName" : "test-section",
+            "children" : [
+              {
+                "blockName" : "test-VR",
+                "{{VR_text1}}" : "COUPLE<br />简爱空间<br />80m&#178; 2房",
+                "{{VR_text2}}" : "专属于新婚小夫妻的甜蜜家装计划<br /> 既有两人共筑梦想的卧室<br />又有可供自由独处的小书房<br />更为迎来家庭新成员做好准备",
+                "{{VR_text3}}" : "体验 360VR",
+                "{{VR_img_path}}" : "@sample_img01.jpg"
+              }
+            ]
+          },{
+            "blockName" : "test-section",
+            "{{section_type}}" : "type2",
+            "{{section_last}}" : "last",
+            "children" : [
+              {
+                "blockName" : "test-slider-wrap",
+                "children" : [
+                  {
+                    "blockName" : "title-area",
+                    "{{title_text}}" : "不仅满足甜蜜的二人世界，更兼顾婴儿出生后的空间<br />为新婚小夫妻精心打造空间设计方案",
+                    "{{title_img_path}}" : "@sample_img02.jpg"
+                  },{
+
+                  },{
+
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+
+    },
+    {
+      "out" : "test1.html",
+      "container1" : {
+        "{{aa}}" : "aa입니다.",
+        "children" : [
+          {
+            "blockName" : "test-block-container",
+            "{{aa}}" : "code2"
+          }
+        ]
+      }
+    },
+    {
+      "out" : "test3.html",
+      "container1" : {
+        "children" : [
+          {
+            "blockName" : "test-visual",
+            "{{visual_text}}" : "COUPLE 简爱空间<br />爱，就是给对方更多的空间",
+            "{{visual_sub_text}}" : "중국사람들 싫어"
+          }
+        ]
+      },
+      "container2" : {
+        "children" : [
+          {
+            "blockName" : "test-section",
+            "children" : [
+              {
+                "blockName" : "test-VR",
+                "{{VR_text1}}" : "COUPLE<br />简爱空间<br />80m&#178; 2房",
+                "{{VR_text2}}" : "专属于新婚小夫妻的甜蜜家装计划<br /> 既有两人共筑梦想的卧室<br />又有可供自由独处的小书房<br />更为迎来家庭新成员做好准备",
+                "{{VR_text3}}" : "体验 360VR",
+                "{{VR_img_path}}" : "@sample_img01.jpg"
+              }
+            ]
+          },{
+            "blockName" : "test-section",
+            "{{section_type}}" : "type2",
+            "{{section_last}}" : "last",
+            "children" : [
+              {
+                "blockName" : "test-slider-wrap",
+                "children" : [
+                  {
+                    "blockName" : "title-area",
+                    "{{title_text}}" : "不仅满足甜蜜的二人世界，更兼顾婴儿出生后的空间<br />为新婚小夫妻精心打造空间设计方案",
+                    "{{title_img_path}}" : "@sample_img02.jpg"
+                  },{
+
+                  },{
+
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+
+    },
+    {
+      "out" : "test4.html",
+      "container1" : {
+        "children" : [
+          {
+            "blockName" : "test-visual",
+            "{{visual_text}}" : "COUPLE 简爱空间<br />爱，就是给对方更多的空间",
+            "{{visual_sub_text}}" : "중국사람들 싫어"
+          }
+        ]
+      },
+      "container2" : {
+        "children" : [
+          {
+            "blockName" : "test-section",
+            "children" : [
+              {
+                "blockName" : "test-VR",
+                "{{VR_text1}}" : "COUPLE<br />简爱空间<br />80m&#178; 2房",
+                "{{VR_text2}}" : "专属于新婚小夫妻的甜蜜家装计划<br /> 既有两人共筑梦想的卧室<br />又有可供自由独处的小书房<br />更为迎来家庭新成员做好准备",
+                "{{VR_text3}}" : "体验 360VR",
+                "{{VR_img_path}}" : "@sample_img01.jpg"
+              }
+            ]
+          },{
+            "blockName" : "test-section",
+            "{{section_type}}" : "type2",
+            "{{section_last}}" : "last",
+            "children" : [
+              {
+                "blockName" : "test-slider-wrap",
+                "children" : [
+                  {
+                    "blockName" : "title-area",
+                    "{{title_text}}" : "不仅满足甜蜜的二人世界，更兼顾婴儿出生后的空间<br />为新婚小夫妻精心打造空间设计方案",
+                    "{{title_img_path}}" : "@sample_img02.jpg"
+                  },{
+                    "blockName" : "test-view-photo",
+                    "{{title_text1}}" : "01<br/>不同阶段  客厅始终高效利用<br />",
+                    "{{title_text2}}" : "只需移动家具  即可满足每个时期不同的空间需求",
+                    "{{life_style_class}}" : "lifeStyle_0",
+                    "children" : [
+                      {
+                        "selector" : "#lifeStyle_0_pager",
+                        "blockName" : "test-pager-item",
+                        "{{index}}" : "0",
+                        "{{text}}" : "新婚"
+                      },
+                      {
+                        "selector" : "#lifeStyle_0_pager",
+                        "blockName" : "test-pager-item",
+                        "{{index}}" : "1",
+                        "{{text}}" : "新生婴儿～6个月"
+                      },
+                      {
+                        "selector" : "#lifeStyle_0_pager",
+                        "blockName" : "test-pager-item",
+                        "{{index}}" : "2",
+                        "{{text}}" : "6个月～1年"
+                      },
+                      {
+                        "selector" : "#lifeStyle_0_pager",
+                        "blockName" : "test-pager-item",
+                        "{{index}}" : "3",
+                        "{{text}}" : "1年～幼儿"
+                      },
+                      {
+                        "selector" : "#lifeStyle_0",
+                        "blockName" : "test-slider-item",
+                        "{{item_img_path}}" : "@sample_slide01.jpg",
+                        "{{item_img_alt}}" : "슬라이드1"
+                      },
+                      {
+                        "selector" : "#lifeStyle_0",
+                        "blockName" : "test-slider-item",
+                        "{{item_img_path}}" : "@sample_slide01.jpg",
+                        "{{item_img_alt}}" : "슬라이드2"
+                      },
+                      {
+                        "selector" : "#lifeStyle_0",
+                        "blockName" : "test-slider-item",
+                        "{{item_img_path}}" : "@sample_slide01.jpg",
+                        "{{item_img_alt}}" : "슬라이드3"
+                      },
+                      {
+                        "selector" : "#lifeStyle_0",
+                        "blockName" : "test-slider-item",
+                        "{{item_img_path}}" : "@sample_slide01.jpg",
+                        "{{item_img_alt}}" : "슬라이드4"
+                      }
+                    ]
+                  },{
+                    "blockName" : "test-view-photo",
+                    "{{title_text1}}" : "02<br/>卧室  妻子的空间  孩子的天地<br />",
+                    "{{title_text2}}" : "轻松容纳妻子的兴趣爱好 更能变成小成员的婴儿床",
+                    "{{life_style_class}}" : "lifeStyle_1",
+                    "children" : [
+                      {
+                        "selector" : "#lifeStyle_1_pager",
+                        "blockName" : "test-pager-item",
+                        "{{index}}" : "0",
+                        "{{text}}" : "新婚"
+                      },
+                      {
+                        "selector" : "#lifeStyle_1_pager",
+                        "blockName" : "test-pager-item",
+                        "{{index}}" : "1",
+                        "{{text}}" : "新生婴儿～6个月"
+                      },
+                      {
+                        "selector" : "#lifeStyle_1",
+                        "blockName" : "test-slider-item",
+                        "{{item_img_path}}" : "@sample_slide02.jpg",
+                        "{{item_img_alt}}" : "슬라이드1"
+                      },
+                      {
+                        "selector" : "#lifeStyle_1",
+                        "blockName" : "test-slider-item",
+                        "{{item_img_path}}" : "@sample_slide02.jpg",
+                        "{{item_img_alt}}" : "슬라이드2"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "container3": {
+        "children": [
+          {
+            "blockName": "test-shop-info",
+            "children" : [
+              {
+                "selector" : ".parallax-container .inner",
+                "blockName" : "test-block-container",
+                "children" : [
+                  {
+                    "{{item_img_path}}" : "@shop_list_img.jpg",
+                    "{{item_text}}" : "囊括装修, 客厅, 厨房,<br />浴室, 卧室, 子女房等空间展示",
+                    "{{item_sub_text}}" : "不同的空间设计展示区",
+                    "blockName" : "test-block-item",
+                    "selector" : ".clfix"
+                  },{
+                    "{{item_img_path}}" : "@shop_list_img.jpg",
+                    "{{item_text}}" : "解决6大家庭类型的<br />不同家居需求",
+                    "{{item_sub_text}}" : "全新Life Style样板房",
+                    "blockName" : "test-block-item",
+                    "selector" : ".clfix"
+                  },{
+                    "{{item_img_path}}" : "@shop_list_img.jpg",
+                    "{{item_text}}" : "调动全身感官,<br />亲自体会梦寐以求的家",
+                    "{{item_sub_text}}" : "360VR体验馆",
+                    "blockName" : "test-block-item",
+                    "selector" : ".clfix"
+                  },{
+                    "{{item_img_path}}" : "@shop_list_img.jpg",
+                    "{{item_text}}" : "厨具, 灯具,<br />收纳等玲琅满目的生活小创意",
+                    "{{item_sub_text}}" : "生活用品馆",
+                    "blockName" : "test-block-item",
+                    "selector" : ".clfix"
+                  }
+                ]
+              }
+            ]
+
+          }
+        ]
+      }
+    }
+  ]
+}
+

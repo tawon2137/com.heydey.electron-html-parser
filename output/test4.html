@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>한샘 차이나 테스트 템플릿</title>
+    <!-- 공통 css -->
+    <link rel="stylesheet" href="css/common.css" type="text/css">
+    <!-- //공통 css -->
+
+    <!-- 공통 js -->
+    <script type="text/javascript" src="js/libs/jquery-1.12.3.js"></script>
+    <script type="text/javascript" src="js/libs/jquery-ui.js"></script>
+    <!-- //공통 js -->
+    <script type="text/javascript" src="js/jquery.bxslider.min.js"></script>
+    <!--<script type="text/javascript" src="js/common.ui.js"></script>-->
+    <script type="text/javascript" src="js/parallax.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            for(var i=0; i < $('.slider').find('li').length; i++){
+                sliderPlay('lifeStyle', i);
+            }
+
+            $(".parallax").parallax();
+        });
+
+        function sliderPlay(name, num) {
+            var sliderName = '#'+name+'_'+num;
+            var $sliderName = $(sliderName);
+
+            var slideLegth = $('.slider').find('li').length;
+            if(slideLegth > 1){
+                $sliderName.bxSlider({
+                    controls: false,
+                    pagerCustom: '#lifeStyle_'+num+'_pager'
+                });
+            }
+        }
+    </script>
+</head>
+<body class="f-cn-regular f-line-height-26">
+aa입니다
+<div id="container" class="sub homestyle">
+    <div><div class="visual f-color-white">
+        <div class="center-vertical">
+            <h2 class="f-size-33 f-line-height-45">COUPLE 简爱空间<br>爱，就是给对方更多的空间</h2>
+            <span class="desc f-size-18">중국사람들 싫어</span>
+	    </div>
+</div></div>
+    <div class="container-center">
+        <div class="detail_menu">
+            <ul class="clfix">
+                <li class="on"><a href="#">LIFE STORY</a></li>
+                <li><a href="#">客厅</a></li>
+                <li><a href="#">卧室</a></li>
+                <li><a href="#">餐厅</a></li>
+                <li><a href="#">丈夫书房</a></li>
+                <li><a href="#">浴室</a></li>
+            </ul>
+        </div>
+    <div class="section  "><div class="clfix div div-2">
+                <div class="txt-area">
+                    <h3 class="tit f-size-33 f-line-height-45">COUPLE<br>简爱空间<br>80m² 2房</h3>
+                    <p class="f-color-gray">专属于新婚小夫妻的甜蜜家装计划<br> 既有两人共筑梦想的卧室<br>又有可供自由独处的小书房<br>更为迎来家庭新成员做好准备</p>
+                    <a href="#" class="btn-base red">体验 360VR</a>
+                </div>
+                <div class="">
+                    <span class="img"><img src="images/@sample_img01.jpg" alt=""></span>
+                </div>
+</div></div><div class="section type2 last"><div class="slider-wrap"><div class="title-area">
+     <p class="f-size-18">不仅满足甜蜜的二人世界，更兼顾婴儿出生后的空间<br>为新婚小夫妻精心打造空间设计方案</p>
+     <div class="tit-img">
+         <span class="img"><img src="images/@sample_img02.jpg" alt=""></span>
+    </div>
+</div><div class="view-photo">
+        <div class="slider-title-area">
+           <p class="f-size-18">01<br>不同阶段  客厅始终高效利用<br><span class="f-color-gray">只需移动家具  即可满足每个时期不同的空间需求</span></p>
+        </div>
+  <div class="slider">
+    <ul id="lifeStyle_0"><li><img src="images/@sample_slide01.jpg" alt="슬라이드1"></li><li><img src="images/@sample_slide01.jpg" alt="슬라이드2"></li><li><img src="images/@sample_slide01.jpg" alt="슬라이드3"></li><li><img src="images/@sample_slide01.jpg" alt="슬라이드4"></li></ul>
+    <div id="lifeStyle_0_pager" class="pager clfix f-size-13"><a data-slide-index="0" href="">新婚</a><a data-slide-index="1" href="">新生婴儿～6个月</a><a data-slide-index="2" href="">6个月～1年</a><a data-slide-index="3" href="">1年～幼儿</a></div>
+  </div>
+</div><div class="view-photo">
+        <div class="slider-title-area">
+           <p class="f-size-18">02<br>卧室  妻子的空间  孩子的天地<br><span class="f-color-gray">轻松容纳妻子的兴趣爱好 更能变成小成员的婴儿床</span></p>
+        </div>
+  <div class="slider">
+    <ul id="lifeStyle_1"><li><img src="images/@sample_slide02.jpg" alt="슬라이드1"></li><li><img src="images/@sample_slide02.jpg" alt="슬라이드2"></li></ul>
+    <div id="lifeStyle_1_pager" class="pager clfix f-size-13"><a data-slide-index="0" href="">新婚</a><a data-slide-index="1" href="">新生婴儿～6个月</a></div>
+  </div>
+</div></div></div></div>
+    <div><div class="shop-info">
+<div class="parallax-container">
+<div class="parallax"><img src="images/"></div>  
+<div class="inner">
+<h3 class="f-size-40 f-line-height-60 f-color-white"></h3>
+<div class="desc f-size-18 f-line-height-26 f-color-white"><p></p></div>
+<div class="list-area">
+	<ul class="clfix"><li>
+     <a href="#this"> </a>
+     <div class="item">
+     	<span class="img"><img src="images/@shop_list_img.jpg" alt=""></span>
+     	<div class="txt f-size-18 f-color-white">
+       		<span class="desc f-size-13 f-line-height-20">囊括装修, 客厅, 厨房,<br>浴室, 卧室, 子女房等空间展示</span>
+       		<h3 class="tit">不同的空间设计展示区</h3>
+     	</div>
+     </div>
+</li><li>
+     <a href="#this"> </a>
+     <div class="item">
+     	<span class="img"><img src="images/@shop_list_img.jpg" alt=""></span>
+     	<div class="txt f-size-18 f-color-white">
+       		<span class="desc f-size-13 f-line-height-20">解决6大家庭类型的<br>不同家居需求</span>
+       		<h3 class="tit">全新Life Style样板房</h3>
+     	</div>
+     </div>
+</li><li>
+     <a href="#this"> </a>
+     <div class="item">
+     	<span class="img"><img src="images/@shop_list_img.jpg" alt=""></span>
+     	<div class="txt f-size-18 f-color-white">
+       		<span class="desc f-size-13 f-line-height-20">调动全身感官,<br>亲自体会梦寐以求的家</span>
+       		<h3 class="tit">360VR体验馆</h3>
+     	</div>
+     </div>
+</li><li>
+     <a href="#this"> </a>
+     <div class="item">
+     	<span class="img"><img src="images/@shop_list_img.jpg" alt=""></span>
+     	<div class="txt f-size-18 f-color-white">
+       		<span class="desc f-size-13 f-line-height-20">厨具, 灯具,<br>收纳等玲琅满目的生活小创意</span>
+       		<h3 class="tit">生活用品馆</h3>
+     	</div>
+     </div>
+</li></ul>
+</div></div>
+</div>
+</div></div>
+</div>
+<script type="text/javascript" src="js/common.ui.js"></script>
+
+</body></html>
