@@ -4,7 +4,6 @@ var fs = require('./lib/fs.promise');
 var path = require('path');
 var cheerio = require('cheerio');
 
-var converterData = {};
 var blockData = {};
 
 var regExp = new RegExp('{{\\w*}}', 'gi');
@@ -94,7 +93,7 @@ module.exports = function (data, conData, blockMap) {
         dataMap = conData;
     }
     if(dataMap === null) {
-        return data.html;
+        return [];
     }
 
     blockData = blockMap;
@@ -117,18 +116,3 @@ module.exports = function (data, conData, blockMap) {
 
 
 
-
-
-
-/*
- function getBlockContainerHtml($, configData) {
- for(var key in configData) {
- var $blockContainer = $(`*[${key}]`);
- if($blockContainer.length > 0) {
- getBlockHtml($blockContainer, configData[key]);
- $blockContainer.removeAttr(key);
- }
- }
- return $.html();
- }
- */

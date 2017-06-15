@@ -4,12 +4,7 @@ var path = require('path');
 
 var configFilePath = path.join(__dirname, '../config/code.config.json');
 
-
-var xlsx = require("node-xlsx");
 var global = {};
-var blockData = {};
-
-var converterData = {};
 var htmlList = [];
 
 
@@ -92,69 +87,22 @@ global.setHtmlList = function (arr) {
 };
 
 
-global.jsonFileRead = function (path) {
-    var data = fs.readFileSync(path, 'utf-8');
+global.jsonFileRead = function (filePath) {
+
+    if(path.extname(filePath) !== 'json') {
+        twCom.fn.toast(`파일의 확장자가 json 포맷이 아닙니다.`, 3000);
+        return {};
+    }
+
+    var data = fs.readFileSync(filePath, 'utf-8');
     try {
         data = JSON.parse(data);
     }catch(exception) {
         data = {};
-        twCom.fn.toast(`${path}파일을 읽는도중 오류가 발생했습니다.`, 3000);
+        twCom.fn.toast(`${filePath}파일을 읽는도중 오류가 발생했습니다.`, 3000);
     }
 
     return data;
 };
 
 module.exports = global;
-
-
-
-
-// function excelDataToJson(dataMap, rowData, currentRow) {
-//     if(rowData.length === 0) return false;
-//
-//
-//     var currentData = dataMap[currentRow[0]][currentRow[1]];
-//     if(!currentData[rowData[2]]) {
-//         currentData[rowData[2]] = {};
-//     }
-//
-//     if(!currentData[rowData[2]][rowData[3]]) {
-//         currentData[rowData[2]][rowData[3]] = {};
-//     }
-//
-//     for(var i = 4; i < rowData.length; i++) {
-//         currentData[rowData[2]][rowData[3]][rowData[i]] = rowData[i+1] || '';
-//         i++;
-//     }
-// }
-// global.readConverterData = function (path) {
-//     var configData = xlsx.parse(path)[0];
-//     configData = configData.data || [];
-//     var currentRow;
-//     for(var i = 0; i < configData.length; i++) {
-//         var row = configData[i];
-//         if(row[0] && row[1] && converterData[row[0]]) {
-//             converterData[row[0]][row[1]] = typeof converterData[row[0]][row[1]] === 'object' ? converterData[row[0]][row[1]] : {};
-//             currentRow = row;
-//         }else if(row[0] && row[1] || row[0] === 'global'){
-//             converterData[row[0]] = {};
-//             row[1] = !row[1] ? 'test': row[1];
-//             converterData[row[0]][row[1]] = {};
-//             currentRow = row;
-//         }
-//         excelDataToJson(converterData, row, currentRow);
-//     }
-//     return converterData;
-// };
-//
-// global.readBlockData = function readBlockData(path) {
-//     var blockFile = xlsx.parse(path)[0];
-//     blockFile = blockFile.data || [];
-//     for(var i = 0; i < blockFile.length; i++) {
-//         var row = blockFile[i];
-//         if(row[0] && row[1]) {
-//             blockData[row[0]] = row[1];
-//         }
-//     }
-//     return blockData;
-// };
