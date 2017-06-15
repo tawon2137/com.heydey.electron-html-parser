@@ -6,18 +6,10 @@ const iconPath = path.join(__dirname, 'image/tray-icon3.png');
 let mainWindow = null;
 
 let contextMenu = Menu.buildFromTemplate([
-    {
-        label: 'Open',
-        accelerator: 'Alt+Command+I',
-        click: () => {
-            if(mainWindow) {
-                mainWindow.show();
-            }
-        }
-    },
     { label: 'Quit',
         accelerator: 'Command+Q',
         selector: 'terminate:',
+        click : () => app.quit()
     }
 ]);
 
@@ -40,7 +32,8 @@ function createWindow () {
         height : 1000,
         x : Math.round(bounds.x - 200 + (bounds.width / 2)),
         y : (process.platform === 'darwin' ) ? bounds.y + bounds.height + 10 : bounds.y - 400 - 10,
-        show : false
+        show : false,
+        acceptFirstMouse : true
     });
 
     mainWindow.loadURL(url.format({
@@ -48,15 +41,19 @@ function createWindow () {
         protocol: 'file:',
         slashes: true
     }));
+    mainWindow.setMenu(null);
 
-    mainWindow.on('closed', function () {
-        mainWindow = null;
-    });
+
+    if (process.platform === 'darwin') {
+        mainWindow.on('blur', () => mainWindow.hide());
+        tray.on('right-click', () => toggle());
+    }else{
+        tray.on('click', () => toggle());
+    }
 }
 
 app.on('ready', createWindow);
 
-// Quit when all windows are closed.
 app.on('window-all-closed', function () {
 
     if (process.platform !== 'darwin') {
@@ -69,3 +66,12 @@ app.on('activate', function () {
         createWindow();
     }
 });
+
+
+function toggle() {
+    if ( mainWindow.isVisible() ){
+        mainWindow.hide();
+    } else {
+        mainWindow.show();
+    }
+}
