@@ -11,7 +11,6 @@ var htmlList = [];
 global.createConfigFile = function () {
     if(!this.fileCheck(configFilePath)) {
         var config = {
-            excelDir : path.join(__dirname, '../excel'),
             targetDir : path.join(__dirname, '../test-template'),
             outputDir : path.join(__dirname, '../output'),
             blockFilePath: path.join(__dirname, '../config/code-block.json'),
@@ -94,8 +93,8 @@ global.jsonFileRead = function (filePath) {
         return {};
     }
 
-    var data = fs.readFileSync(filePath, 'utf-8');
     try {
+        var data = fs.readFileSync(filePath, 'utf-8');
         data = JSON.parse(data);
     }catch(exception) {
         data = {};

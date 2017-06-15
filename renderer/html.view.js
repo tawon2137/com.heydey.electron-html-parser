@@ -122,6 +122,10 @@ module.exports = function fileChange(targetElement) {
         var config = global.getConfigData();
         var htmlDir = config.targetDir;
         if(listContainer) { listContainer.innerHTML = ''; }
+        if(!fs.existsSync(htmlDir)) {
+            twCom.fn.toast('HTML 파일디렉토리가 존재하지않습니다.',3000);
+            return;
+        }
         fs.readdirAsync(htmlDir)
                 .then(result => {
                     var arr = [];

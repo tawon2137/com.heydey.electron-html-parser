@@ -3,9 +3,8 @@
     var cheerio = require('cheerio');
     var global = require('./global');
     
-    function configSave(form) {
+    function configSave(form, prevConfig) {
         return function (e) {
-            var prevConfig = global.getConfigData();
             var config = Object.assign({}, prevConfig);
             try {
                 config.targetDir = form.querySelector('input[name="template-directory"]').value;
@@ -45,10 +44,10 @@
         var container = mainElement.querySelector('div.row.container');
         var form = container.querySelector('#code-config-form');
 
-        form.querySelector('input[name="template-directory"]').setAttribute('value', config.targetDir);
-        form.querySelector('input[name="output-directory"]').setAttribute('value', config.outputDir);
-        form.querySelector('input[name="converter-path"]').setAttribute('value', config.converterFilePath);
-        form.querySelector('input[name="block-path"]').setAttribute('value', config.blockFilePath);
+        form.querySelector('input[name="template-directory"]').setAttribute('value', config.targetDir || '');
+        form.querySelector('input[name="output-directory"]').setAttribute('value', config.outputDir || '');
+        form.querySelector('input[name="converter-path"]').setAttribute('value', config.converterFilePath || '');
+        form.querySelector('input[name="block-path"]').setAttribute('value', config.blockFilePath || '');
 
 
         form.querySelector('#config-form-output-directory').onchange = pathChange;
@@ -56,7 +55,7 @@
         form.querySelector('#config-form-converter-path').onchange = pathChange;
         form.querySelector('#config-form-block-path').onchange = pathChange;
 
-        form.querySelector('#config-form-save').onclick =  configSave(form);
+        form.querySelector('#config-form-save').onclick =  configSave(form, config);
     }
 
     module.exports = readSubCode;
