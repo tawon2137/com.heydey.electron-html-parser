@@ -54,24 +54,42 @@ function getSubCodeInsertData(htmlData, subCodeData, codeRemove, repeatNum) {
     }
     return htmlData;
 }
-
+function twoDimensionalCheck(array, dimensional) {
+  var bool = true;
+      for(var i = 0; i < array.length; i++) {
+        if(Array.isArray(array[i])) {
+          continue;
+        }else {
+          bool = false;
+          break;
+        }
+      }
+      return bool;
+}
 
 function blockConverter($blockContainer, childs) {
-    var blockName, insertHtml, referHtml, childContainer, repeat, htmlsplit;
+    var blockName, insertHtml, referHtml, childContainer, repeat, htmlsplit, $, arr;
    for(var i = 0; i < childs.length; i++) {
        blockName = childs[i].blockName;
        if(blockData[blockName]) {
            insertHtml = getSubCodeInsertData(blockData[blockName], childs[i], false, childs[i].repeat);
-           referHtml = cheerio.load(`${insertHtml}`, { decodeEntities: false })('body');
+           htmlsplit = insertHtml.split('@');
+           insertHtml = insertHtml.replace('@repeat', '');
+           $ = cheerio.load(`${insertHtml}`, { decodeEntities: false });
+           referHtml = $('body');
            if(Array.isArray(childs[i].children)) {
-               htmlsplit = insertHtml.split('@');
                repeat = htmlsplit[htmlsplit.length - 1] === 'repeat' ? true : false;
-               childContainer = repeat ? referHtml.children() : referHtml.children().last();
-               blockConverter(childContainer, childs[i].children);
+               if(repeat && twoDimensionalCheck(childs[i].children)){
+                arr = childs[i].children;
+                for(var j = 0, len = arr.length; j < len; j++) {
+                  blockConverter(referHtml.children().eq(j), childs[i].children[j]);
+                }
+              }else {
+                childContainer = repeat ? referHtml.children() : referHtml.children().last();
+                blockConverter(childContainer, childs[i].children);
+              }
            }
            childs[i].selector ? $blockContainer.find(childs[i].selector).append(referHtml.html()) : $blockContainer.append(referHtml.html());
-       }else {
-
        }
    }
 }
