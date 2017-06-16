@@ -10,15 +10,21 @@ var htmlList = [];
 
 global.createConfigFile = function () {
     if(!this.fileCheck(configFilePath)) {
-        var config = {
-            targetDir : path.join(__dirname, '../test-template'),
-            outputDir : path.join(__dirname, '../output'),
-            blockFilePath: path.join(__dirname, '../config/code-block.json'),
-            converterFilePath : path.join(__dirname, '../converter/converter1.json'),
-        };
-        fs.writeFileSync(configFilePath , JSON.stringify(config));
+      var targetDir = path.join(__dirname, '../test-template');
+        var config = this.returnPath(targetDir);
+        config.outputDir = path.join(__dirname, '../output');
+        this.saveConfigData(config);
     }
 };
+
+global.returnPath = function (dirPath) {
+    var targetDir = dirPath || __dirname;
+    return {
+      targetDir : targetDir,
+      blockFilePath : path.join(targetDir, 'code.block.json'),
+      converterFilePath : path.join(targetDir, 'code.converter.json'),
+    }
+}
 
 global.saveConfigData = function (config) {
     if(typeof config === 'object') {
@@ -82,15 +88,17 @@ global.setHtmlList = function (arr) {
     for(var i = 0; i < arr.length; i++) {
         htmlList[i] = arr[i];
     }
-    htmlList = arr;
 };
 
 
 global.jsonFileRead = function (filePath) {
-
-    if(path.extname(filePath) !== 'json') {
+    if(path.extname(filePath) !== '.json') {
         twCom.fn.toast(`파일의 확장자가 json 포맷이 아닙니다.`, 3000);
         return {};
+    }
+
+    if (!this.fileCheck(filePath)) {
+        fs.writeFileSync(filePath, '');
     }
 
     try {
@@ -98,7 +106,7 @@ global.jsonFileRead = function (filePath) {
         data = JSON.parse(data);
     }catch(exception) {
         data = {};
-        twCom.fn.toast(`${filePath}파일을 읽는도중 오류가 발생했습니다.`, 3000);
+        twCom.fn.toast(`${filePath}의 데이터가 JSON 양식이 아닙니다.`, 3000);
     }
 
     return data;

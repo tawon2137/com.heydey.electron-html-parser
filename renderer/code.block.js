@@ -2,8 +2,8 @@
     var path = require('path');
     var fs = require('./lib/fs.promise');
     var cheerio = require('cheerio');
-    var blockfilePath = path.join(__dirname, '../config/code-block.json');
     var global = require('./global');
+    var config, blockFilePath;
     var addblock;
 
     function readCodeblock(mainElement) {
@@ -12,6 +12,8 @@
             lineNumbers: true,
             mode: 'htmlmixed'
         };
+        config = global.getConfigData();
+        blockFilePath = config.blockFilePath;
 
         if (!addblock) {
             addblock = CodeMirror(document.querySelector('#block-code'), mirrorOption);
@@ -20,18 +22,13 @@
             addblock = CodeMirror(document.querySelector('#block-code'), mirrorOption);
         }
 
-        //파일있는지없는지 여부체크v
-        if (!global.fileCheck(blockfilePath)) {
-            fs.writeFileAsync(blockfilePath, '')
-        }
 
-
-        var blockData = fs.readFileSync(blockfilePath, 'utf-8');
+        var blockData = global.jsonFileRead(blockFilePath);
         var blockList;
         try {
-            blockList = getBlockElementList(JSON.parse(blockData));
+            blockList = getBlockElementList(blockData);
         } catch (exception) {
-            blockList = {};
+            blockList = [];
         }
 
         var container = mainElement.querySelector('div.row.container');
@@ -54,13 +51,13 @@
 
         var card = global.getRootElement(trigger, 'card');
         var key = card.getAttribute('data-block-id');
-        var data = fs.readFileSync(blockfilePath, 'utf-8');
+        var data = fs.readFileSync(blockFilePath, 'utf-8');
         data = data ? JSON.parse(data) : {};
 
         if(data[key]) {
             delete data[key];
             card.parentElement.removeChild(card);
-            fs.writeFileSync(blockfilePath, JSON.stringify(data));
+            fs.writeFileSync(blockFilePath, JSON.stringify(data));
             twCom.fn.toast(`(${key})블록코드를 삭제했습니다.`, 2000);
         }
     }
@@ -105,13 +102,13 @@
     function codeBlockAdd(e) {
         var fileData = null;
         var parentElement = global.getRootElement(e.target, 'card');
-        if(!fs.existsSync(blockfilePath) || !parentElement) {
+        if(!fs.existsSync(blockFilePath) || !parentElement) {
             twCom.fn.toast('추가할 설정파일이 존재하지않거나 루트 엘리먼트 검색에 실패했습니다.', 5000);
             return false;
         }
 
         try {
-            var fileData = fs.readFileSync(blockfilePath, 'utf-8');
+            var fileData = fs.readFileSync(blockFilePath, 'utf-8');
             fileData = fileData ? JSON.parse(fileData) : {};
             var name = parentElement.querySelector(`form input[name="name"]`).value;
             var htmlValue = addblock.getValue();
@@ -126,7 +123,7 @@
                 return false;
             }
 
-            fs.writeFileSync(blockfilePath, JSON.stringify(fileData));
+            fs.writeFileSync(blockFilePath, JSON.stringify(fileData));
             twCom.fn.toast('블록이 추가되었습니다.', 5000);
 
         }catch(expection) {

@@ -58,14 +58,16 @@
         border: 1px solid #eee;
         height: auto;
       }
+      .addForm {
+        position: fixed; bottom: 0; width: 80%; margin: auto; left:0; right: 0; padding-left: 200px;
+        z-index: 888;
+      }
 
 
       @media only screen and (max-width: 1366px) {
         .side-nav-logo {
           font-size: 1.5rem; }
-        header {
-          padding-left: 0; }
-        main {
+        header, main, .addForm {
           padding-left: 0; }
         #output-directory-btn,  #block-form-show {
           margin-left: 2rem;
@@ -75,11 +77,6 @@
       @media only screen and (max-width: 720px) {
         .side-nav-logo {
           font-size: 1.5rem; }  }
-      .addForm {
-        position: fixed; bottom: 0; width: 80%; margin: auto; left:0; right: 0; padding-left: 200px;
-        z-index: 888;
-      }
-
     </style>
   </head>
   <body>
@@ -133,8 +130,8 @@
             <div id="block-code" ></div>
           </div>
           <div class="card-action" style="text-align: right">
-            <a class="tw-btn-clear waves-effect " data-wavecolor="black" id="create-block" >블록 추가</a>
             <a class="tw-btn-clear waves-effect " data-wavecolor="black" id="block-form-hide" >숨기기</a>
+            <a class="tw-btn-clear waves-effect " data-wavecolor="black" id="create-block" >블록 추가</a>
           </div>
         </form>
       </div>
@@ -161,20 +158,6 @@
           <hr class="focusline">
         </div>
         <label class="tw-btn col s2 indigo-a-3 white-text" for="config-form-output-directory" style="margin-top: 10px;">선택</label>
-
-        <div class="tw-input-field col s9">
-          <input type="file" id="config-form-converter-path">
-          <input type="text" name="converter-path" readonly placeholder="변환데이터 엑셀파일 선택">
-          <hr class="focusline">
-        </div>
-        <label class="tw-btn col s2 indigo-a-3 white-text" for="config-form-converter-path" style="margin-top: 10px;">선택</label>
-
-        <div class="tw-input-field col s9">
-          <input type="file" id="config-form-block-path" >
-          <input type="text" name="block-path" readonly placeholder="블록 설정엑셀파일 선택" >
-          <hr class="focusline">
-        </div>
-        <label class="tw-btn col s2 indigo-a-3 white-text" for="config-form-block-path" style="margin-top: 10px;">선택</label>
         <a class="tw-btn col s12 indigo-a-3 white-text" id="config-form-save">저장</a>
       </form>
     </div>
@@ -190,6 +173,3 @@
   <script>require('./renderer/index');</script>
   </body>
 </html>
-
-
-
