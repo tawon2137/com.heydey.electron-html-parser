@@ -6,10 +6,15 @@ const iconPath = path.join(__dirname, 'image/tray-icon3.png');
 let mainWindow = null;
 
 let contextMenu = Menu.buildFromTemplate([
-    { label: 'Quit',
-        accelerator: 'Command+Q',
-        selector: 'terminate:',
-        click : () => app.quit()
+    {
+      label: 'hide',
+      click : () => mainWindow ? mainWindow.hide() : ''
+    },
+    {
+      label: 'Quit',
+      accelerator: 'Command+Q',
+      selector: 'terminate:',
+      click : () => app.quit()
     }
 ]);
 
@@ -45,7 +50,6 @@ function createWindow () {
 
 
     if (process.platform === 'darwin') {
-        mainWindow.on('blur', () => mainWindow.hide());
         tray.on('right-click', () => toggle());
     }else{
         tray.on('click', () => toggle());

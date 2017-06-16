@@ -8,8 +8,25 @@ var blockData = {};
 
 var regExp = new RegExp('{{\\w*}}', 'gi');
 
-function getSubCodeInsertData(htmlData, subCodeData) {
+function repeatHtml(htmlData, num, propArr) {
+    var htmlRepeatData = '';
+    var imsiString = '';
+    var reg = new RegExp(`(${Object.keys(propArr).join('|')})`,'i');
+    var indexReg = new RegExp('{{_index}}','gim');
+    for(var i = 0; i < num; i++) {
+      imsiString = htmlData;
+        if(reg.test(htmlData)) {
+          imsiString = htmlData;
+            for(var key in propArr) {
+              imsiString = imsiString.replace(key, propArr[key][i] || '');
+            }
+        }
+      htmlRepeatData += imsiString.replace(indexReg, i);
+    }
+    return htmlRepeatData + "@repeat";
+}
 
+function getSubCodeInsertData(htmlData, subCodeData, codeRemove, repeatNum) {
     var subCodeNames = getSubCodeKey(Object.keys(subCodeData));
     if( !converterCodeCheck(htmlData) && subCodeData.length > 0 ) return htmlData;
     var subCodes = {};
@@ -19,30 +36,42 @@ function getSubCodeInsertData(htmlData, subCodeData) {
     }
 
     var matches = htmlData.match(regExp);
+    var arrProp = {};
     matches = matches === null ? [] : matches;
     for(var i = 0, len = matches.length; i < len; i++) {
-        if(subCodes[matches[i]]) {
-            htmlData = htmlData.replace(matches[i], subCodes[matches[i]]);
+        if( subCodes[matches[i]] && repeatNum > 0 && Array.isArray(subCodes[matches[i]]) ) {
+          arrProp[matches[i]] = subCodes[matches[i]];
+          continue;
+        }else if(subCodes[matches[i]]){
+          htmlData = htmlData.replace(matches[i], subCodes[matches[i]]);
         }else {
-            htmlData = htmlData.replace(matches[i], '');
+          htmlData = codeRemove ? htmlData : htmlData.replace(matches[i], '');
         }
+    }
+
+    if(repeatNum) {
+      htmlData = repeatHtml(htmlData,Number(repeatNum), arrProp);
     }
     return htmlData;
 }
 
 
 function blockConverter($blockContainer, childs) {
-    var blockName, insertHtml, referHtml;
+    var blockName, insertHtml, referHtml, childContainer, repeat, htmlsplit;
    for(var i = 0; i < childs.length; i++) {
        blockName = childs[i].blockName;
        if(blockData[blockName]) {
-           insertHtml = getSubCodeInsertData(blockData[blockName], childs[i]);
-
+           insertHtml = getSubCodeInsertData(blockData[blockName], childs[i], false, childs[i].repeat);
            referHtml = cheerio.load(`${insertHtml}`, { decodeEntities: false })('body');
            if(Array.isArray(childs[i].children)) {
-               blockConverter(referHtml.children().last(), childs[i].children);
+               htmlsplit = insertHtml.split('@');
+               repeat = htmlsplit[htmlsplit.length - 1] === 'repeat' ? true : false;
+               childContainer = repeat ? referHtml.children() : referHtml.children().last();
+               blockConverter(childContainer, childs[i].children);
            }
            childs[i].selector ? $blockContainer.find(childs[i].selector).append(referHtml.html()) : $blockContainer.append(referHtml.html());
+       }else {
+
        }
    }
 }
@@ -97,7 +126,7 @@ module.exports = function (data, conData, blockMap) {
     }
 
     blockData = blockMap;
-    var html = getSubCodeInsertData(data.html, dataMap);
+    var html = getSubCodeInsertData(data.html, dataMap, true);
     var templateArr = dataMap.outFiles;
     var $,fileName, htmlReturnValue;
     for(var i = 0; i < templateArr.length; i++) {
@@ -109,10 +138,3 @@ module.exports = function (data, conData, blockMap) {
     }
     return htmlList;
 };
-
-
-
-
-
-
-

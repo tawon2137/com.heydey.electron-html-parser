@@ -22,16 +22,11 @@
             addblock = CodeMirror(document.querySelector('#block-code'), mirrorOption);
         }
 
-        //파일있는지없는지 여부체크v
-        if (!global.fileCheck(blockFilePath)) {
-            fs.writeFileAsync(blockFilePath, '');
-        }
 
-
-        var blockData = fs.readFileSync(blockFilePath, 'utf-8');
+        var blockData = global.jsonFileRead(blockFilePath);
         var blockList;
         try {
-            blockList = getBlockElementList(JSON.parse(blockData));
+            blockList = getBlockElementList(blockData);
         } catch (exception) {
             blockList = [];
         }
