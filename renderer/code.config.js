@@ -31,7 +31,7 @@
         }
         if(element.getAttribute('directory') === null && filePath) {
             var ext = path.extname(filePath);
-            ext === '.xlsx' ? fileInput.setAttribute('value', filePath) : twCom.fn.toast('파일확장자가 잘못되었습니다.', 4000);
+            ext === '.json' ? fileInput.setAttribute('value', filePath) : twCom.fn.toast('파일확장자가 잘못되었습니다.', 4000);
         }else if(filePath) {
             fileInput.setAttribute('value', filePath);
         }

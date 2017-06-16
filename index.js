@@ -26,12 +26,12 @@ function createWindow () {
 
     let bounds = tray.getBounds();
 
-
+    let width = 1400,height = 1000;
     mainWindow = new BrowserWindow({
-        width : 1400,
-        height : 1000,
-        x : Math.round(bounds.x - 200 + (bounds.width / 2)),
-        y : (process.platform === 'darwin' ) ? bounds.y + bounds.height + 10 : bounds.y - 400 - 10,
+        width : width,
+        height : height,
+        x : Math.round(bounds.x - width + (bounds.width / 2)),
+        y : (process.platform === 'darwin' ) ? bounds.y + bounds.height + 10 : bounds.y - height - 10,
         show : false,
         acceptFirstMouse : true
     });

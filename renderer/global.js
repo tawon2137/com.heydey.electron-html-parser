@@ -88,7 +88,7 @@ global.setHtmlList = function (arr) {
 
 global.jsonFileRead = function (filePath) {
 
-    if(path.extname(filePath) !== 'json') {
+    if(path.extname(filePath) !== '.json') {
         twCom.fn.toast(`파일의 확장자가 json 포맷이 아닙니다.`, 3000);
         return {};
     }
