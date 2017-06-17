@@ -3,10 +3,11 @@
 var fs = require('./lib/fs.promise');
 var path = require('path');
 var cheerio = require('cheerio');
-
+var global = require('./global');
 var blockData = {};
 
 var regExp = new RegExp('{{\\w*}}', 'gi');
+var includeExp = new RegExp('{{_include@(.*)(\\.html)}}', 'gi');
 
 function repeatHtml(htmlData, num, propArr) {
     var htmlRepeatData = '';
@@ -104,8 +105,9 @@ function containerConverter($blockContainer, containerChilds) {
 }
 
 
-function converterCodeCheck(htmlData) {
-    var matches = htmlData.match(regExp);
+function converterCodeCheck(htmlData, argExp) {
+    argExp = argExp ? argExp : regExp;
+    var matches = htmlData.match(argExp);
 
     return matches !== null
 }
@@ -126,7 +128,20 @@ function htmlConvert($, convert) {
     return $.html();
 }
 
-module.exports = function (data, conData, blockMap) {
+function includeHtml(htmlData, dirPath) {
+  var includes = htmlData.match(includeExp);
+  var filePath, fileData, giReg;
+
+  for(var i = 0; i < includes.length; i++) {
+    giReg = new RegExp(includes[i], 'gi');
+    filePath = includes[i].split('@')[1].replace('}}', '').trim();
+    fileData = global.getHtmlFile(dirPath, filePath);
+    htmlData = htmlData.replace(giReg, fileData);
+  }
+  return htmlData;
+}
+
+module.exports = function (data, conData, blockMap, templatePath) {
     var fileName = data.fileName;
     var htmlList = [];
     var dataMap = null;
@@ -145,6 +160,7 @@ module.exports = function (data, conData, blockMap) {
 
     blockData = blockMap;
     var html = getSubCodeInsertData(data.html, dataMap, true);
+    html = converterCodeCheck(html, includeExp) ? includeHtml(html, templatePath) : html;
     var templateArr = dataMap.outFiles;
     var $,fileName, htmlReturnValue;
     for(var i = 0; i < templateArr.length; i++) {

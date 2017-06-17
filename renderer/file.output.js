@@ -24,7 +24,7 @@ module.exports = function (htmlList) {
 
         var promises = [];
         for(var key in htmlList) {
-            var htmlData = converterHtml(htmlList[key], converterData, blockData);
+            var htmlData = converterHtml(htmlList[key], converterData, blockData, configData.targetDir);
             for(var i = 0; i < htmlData.length; i++) {
                 var fileName = Object.keys(htmlData[i])[0];
                 if(path.extname(fileName) === '.html') {
