@@ -35,7 +35,7 @@ function saveHtml(contentElement) {
 }
 
 function htmlLoad(dirName, fileName) {
-    var readPromise = global.getHtmlFile(dirName, fileName);
+    var readPromise = global.getHtmlFilePromise(dirName, fileName);
     return readPromise;
 }
 

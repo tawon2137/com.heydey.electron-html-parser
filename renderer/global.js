@@ -43,7 +43,6 @@ global.getConfigData = function () {
         }finally {
             return data;
         }
-
     }else {
         return null;
     }
@@ -57,13 +56,26 @@ global.isHtmlFile = function (fullPath) {
     return fs.statSync(fullPath).isFile() && path.extname(fullPath) === '.html';
 }
 
-global.getHtmlFile = function (dirName, fileName) {
+global.getHtmlFilePromise = function (dirName, fileName) {
     var fullPath = path.join(dirName, fileName);
 
     if(this.isHtmlFile(fullPath)) {
         return fs.readFileAsync(fullPath, 'utf-8');
     }else {
         return null;
+    }
+};
+global.getHtmlFile = function (dirName, fileName) {
+    var fullPath = path.join(dirName, fileName);
+    console.log(fullPath);
+    try{
+      if(this.isHtmlFile(fullPath)) {
+          return fs.readFileSync(fullPath, 'utf-8');
+      }else {
+          return '';
+      }
+    }catch(exception) {
+      return '';
     }
 };
 

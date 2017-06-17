@@ -3,10 +3,11 @@
 var fs = require('./lib/fs.promise');
 var path = require('path');
 var cheerio = require('cheerio');
-
+var global = require('./global');
 var blockData = {};
 
 var regExp = new RegExp('{{\\w*}}', 'gi');
+var includeExp = new RegExp('{{_include@(.*)(\\.html)}}', 'gi');
 
 function repeatHtml(htmlData, num, propArr) {
     var htmlRepeatData = '';
@@ -54,24 +55,42 @@ function getSubCodeInsertData(htmlData, subCodeData, codeRemove, repeatNum) {
     }
     return htmlData;
 }
-
+function twoDimensionalCheck(array, dimensional) {
+  var bool = true;
+      for(var i = 0; i < array.length; i++) {
+        if(Array.isArray(array[i])) {
+          continue;
+        }else {
+          bool = false;
+          break;
+        }
+      }
+      return bool;
+}
 
 function blockConverter($blockContainer, childs) {
-    var blockName, insertHtml, referHtml, childContainer, repeat, htmlsplit;
+    var blockName, insertHtml, referHtml, childContainer, repeat, htmlsplit, $, arr;
    for(var i = 0; i < childs.length; i++) {
        blockName = childs[i].blockName;
        if(blockData[blockName]) {
            insertHtml = getSubCodeInsertData(blockData[blockName], childs[i], false, childs[i].repeat);
-           referHtml = cheerio.load(`${insertHtml}`, { decodeEntities: false })('body');
+           htmlsplit = insertHtml.split('@');
+           insertHtml = insertHtml.replace('@repeat', '');
+           $ = cheerio.load(`${insertHtml}`, { decodeEntities: false });
+           referHtml = $('body');
            if(Array.isArray(childs[i].children)) {
-               htmlsplit = insertHtml.split('@');
                repeat = htmlsplit[htmlsplit.length - 1] === 'repeat' ? true : false;
-               childContainer = repeat ? referHtml.children() : referHtml.children().last();
-               blockConverter(childContainer, childs[i].children);
+               if(repeat && twoDimensionalCheck(childs[i].children)){
+                arr = childs[i].children;
+                for(var j = 0, len = arr.length; j < len; j++) {
+                  blockConverter(referHtml.children().eq(j), childs[i].children[j]);
+                }
+              }else {
+                childContainer = repeat ? referHtml.children() : referHtml.children().last();
+                blockConverter(childContainer, childs[i].children);
+              }
            }
            childs[i].selector ? $blockContainer.find(childs[i].selector).append(referHtml.html()) : $blockContainer.append(referHtml.html());
-       }else {
-
        }
    }
 }
@@ -86,8 +105,9 @@ function containerConverter($blockContainer, containerChilds) {
 }
 
 
-function converterCodeCheck(htmlData) {
-    var matches = htmlData.match(regExp);
+function converterCodeCheck(htmlData, argExp) {
+    argExp = argExp ? argExp : regExp;
+    var matches = htmlData.match(argExp);
 
     return matches !== null
 }
@@ -108,7 +128,20 @@ function htmlConvert($, convert) {
     return $.html();
 }
 
-module.exports = function (data, conData, blockMap) {
+function includeHtml(htmlData, dirPath) {
+  var includes = htmlData.match(includeExp);
+  var filePath, fileData, giReg;
+
+  for(var i = 0; i < includes.length; i++) {
+    giReg = new RegExp(includes[i], 'gi');
+    filePath = includes[i].split('@')[1].replace('}}', '').trim();
+    fileData = global.getHtmlFile(dirPath, filePath);
+    htmlData = htmlData.replace(giReg, fileData);
+  }
+  return htmlData;
+}
+
+module.exports = function (data, conData, blockMap, templatePath) {
     var fileName = data.fileName;
     var htmlList = [];
     var dataMap = null;
@@ -127,6 +160,7 @@ module.exports = function (data, conData, blockMap) {
 
     blockData = blockMap;
     var html = getSubCodeInsertData(data.html, dataMap, true);
+    html = converterCodeCheck(html, includeExp) ? includeHtml(html, templatePath) : html;
     var templateArr = dataMap.outFiles;
     var $,fileName, htmlReturnValue;
     for(var i = 0; i < templateArr.length; i++) {
