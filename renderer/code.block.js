@@ -125,13 +125,11 @@
 
             fs.writeFileSync(blockFilePath, JSON.stringify(fileData));
             twCom.fn.toast('블록이 추가되었습니다.', 5000);
-
+            parentElement ? parentElement.querySelector('form').reset() : '';
+            readCodeblock(document.querySelector('#code-block'));
         }catch(expection) {
             console.error('Error Console : ', expection);
             twCom.fn.toast('파일처리도중 에러가 발생하였습니다. 콘솔을 확인해주세요.', 5000);
-        }finally {
-            parentElement ? parentElement.querySelector('form').reset() : '';
-            readCodeblock(document.querySelector('#code-block'));
         }
     }
 

@@ -67,7 +67,6 @@ global.getHtmlFilePromise = function (dirName, fileName) {
 };
 global.getHtmlFile = function (dirName, fileName) {
     var fullPath = path.join(dirName, fileName);
-    console.log(fullPath);
     try{
       if(this.isHtmlFile(fullPath)) {
           return fs.readFileSync(fullPath, 'utf-8');
