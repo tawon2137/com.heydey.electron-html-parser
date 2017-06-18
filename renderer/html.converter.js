@@ -12,14 +12,14 @@ var includeExp = new RegExp('{{_include@(.*)(\\.html)}}', 'gi');
 function repeatHtml(htmlData, num, propArr) {
     var htmlRepeatData = '';
     var imsiString = '';
-    var reg = new RegExp(`(${Object.keys(propArr).join('|')})`,'gi');
+    var reg = new RegExp(`(${Object.keys(propArr).join('|')})`,'i');
     var indexReg = new RegExp('{{_index}}','gim');
     for(var i = 0; i < num; i++) {
       imsiString = htmlData;
         if(reg.test(htmlData)) {
           imsiString = htmlData;
             for(var key in propArr) {
-              imsiString = imsiString.replace(new RegExp(key, 'gi'), propArr[key][i] || '');
+              imsiString = imsiString.replace(new RegExp(key, 'gim'), propArr[key][i] || '');
             }
         }
       htmlRepeatData += imsiString.replace(indexReg, i);
@@ -45,7 +45,7 @@ function getSubCodeInsertData(htmlData, subCodeData, codeRemove, repeatNum) {
           arrProp[matches[i]] = subCodes[matches[i]];
           continue;
         }else if(subCodes[matches[i]]){
-          htmlData = htmlData.replace(new RegExp(matches[i], 'gi'), subCodes[matches[i]]);
+          htmlData = htmlData.replace(matches[i], subCodes[matches[i]]);
         }else {
           htmlData = codeRemove ? htmlData : htmlData.replace(matches[i], '');
         }
