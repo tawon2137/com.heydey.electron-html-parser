@@ -28,7 +28,7 @@ function repeatHtml(htmlData, num, propArr) {
 }
 
 function getSubCodeInsertData(htmlData, subCodeData, codeRemove, repeatNum) {
-    var subCodeNames = getSubCodeKey(Object.keys(subCodeData));
+    var subCodeNames = getSubCodeKey(Object.keys(subCodeData || {}));
     if( !converterCodeCheck(htmlData) && subCodeData.length > 0 ) return htmlData;
     var subCodes = {};
 
@@ -38,6 +38,7 @@ function getSubCodeInsertData(htmlData, subCodeData, codeRemove, repeatNum) {
 
     var matches = htmlData.match(regExp);
     var arrProp = {};
+    var subCodesValue = '';
     var matcheExp;
     matches = matches === null ? [] : matches;
     for(var i = 0, len = matches.length; i < len; i++){
@@ -45,15 +46,20 @@ function getSubCodeInsertData(htmlData, subCodeData, codeRemove, repeatNum) {
           arrProp[matches[i]] = subCodes[matches[i]];
           continue;
         }else if(subCodes[matches[i]]){
-          htmlData = htmlData.replace(matches[i], subCodes[matches[i]]);
+            subCodesValue = subCodes[matches[i]];
+            if(regExp.test(subCodes[matches[i]])) {
+                subCodesValue = getSubCodeInsertData(subCodesValue, subCodeData.__proto__, true);
+            }
+            htmlData = htmlData.replace(matches[i], subCodesValue);
         }else {
-          htmlData = codeRemove ? htmlData : htmlData.replace(matches[i], '');
+            htmlData = codeRemove ? htmlData : htmlData.replace(matches[i], '');
         }
     }
 
     if(repeatNum) {
       htmlData = repeatHtml(htmlData,Number(repeatNum), arrProp);
     }
+
     return htmlData;
 }
 function twoDimensionalCheck(array, dimensional) {
@@ -117,7 +123,7 @@ function getSubCodeKey(conKeys) {
 }
 function htmlConvert($, convert) {
     for(var key in convert) {
-        if(key === 'out') continue;
+        if(key === 'out' || regExp.test(key)) continue;
 
         var $blockContainer = $(`*[${key}]`);
         if($blockContainer.length > 0) {
@@ -141,6 +147,32 @@ function includeHtml(htmlData, dirPath) {
   }
   return htmlData;
 }
+function setSubCodePrototype(refObj, targetObj) {
+    if(typeof targetObj !== 'object') {
+        return false;
+    }else if(!Array.isArray(targetObj)){
+        targetObj.__proto__ = refObj;
+    }
+
+    var keys = Object.keys(targetObj);
+    for(var i = 0; i < keys.length; i++) {
+        if(targetObj.hasOwnProperty(keys[i]) && typeof targetObj[keys[i]] === "object") {
+            setSubCodePrototype(refObj, targetObj[keys[i]]);
+        }
+    }
+}
+function chainGlobalSubCodes(subCodeObj) {
+    var subCodeKeys = getSubCodeKey(Object.keys(subCodeObj));
+    if(subCodeKeys.length === 0 ) return false;
+    var object = {};
+    for(var i = 0; i < subCodeKeys.length; i++) {
+        object[subCodeKeys[i]] = subCodeObj[subCodeKeys[i]];
+        delete subCodeObj[subCodeKeys[i]];
+    }
+
+    setSubCodePrototype(object, subCodeObj);
+
+}
 
 module.exports = function (data, conData, blockMap, templatePath) {
     var fileName = data.fileName;
@@ -158,7 +190,6 @@ module.exports = function (data, conData, blockMap, templatePath) {
     if(dataMap === null) {
         return [];
     }
-
     blockData = blockMap;
     var html = getSubCodeInsertData(data.html, dataMap, true);
     html = converterCodeCheck(html, includeExp) ? includeHtml(html, templatePath) : html;
@@ -168,6 +199,7 @@ module.exports = function (data, conData, blockMap, templatePath) {
         fileName = templateArr[i].out;
         $ = cheerio.load(html,  { decodeEntities: false });
         htmlReturnValue = {};
+        chainGlobalSubCodes(templateArr[i]);
         htmlReturnValue[fileName] = htmlConvert($, templateArr[i]);
         htmlList.push(htmlReturnValue);
     }
