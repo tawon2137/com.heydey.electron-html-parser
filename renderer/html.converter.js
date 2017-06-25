@@ -194,7 +194,7 @@ module.exports = function (data, conData, blockMap, templatePath) {
     if(dataMap === null) {
        let html = converterCodeCheck(data.html, includeExp) ? includeHtml(data.html, templatePath) : data.html;
        let notConverterFileData = {};
-       notConverterFileData[data.fileName] = html;
+       notConverterFileData['out_' + data.fileName] = html;
        return [notConverterFileData];
     }
     blockData = blockMap;
@@ -207,7 +207,7 @@ module.exports = function (data, conData, blockMap, templatePath) {
         $ = cheerio.load(html,  { decodeEntities: false });
         htmlReturnValue = {};
         chainGlobalSubCodes(templateArr[i]);
-        htmlReturnValue[fileName] = htmlConvert($, templateArr[i]);
+        htmlReturnValue['out_'+fileName] = htmlConvert($, templateArr[i]);
         htmlList.push(htmlReturnValue);
     }
     return htmlList;
