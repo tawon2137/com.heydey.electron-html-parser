@@ -17,11 +17,6 @@ module.exports = function (htmlList) {
         var currentReadPath = configData.targetDir;
 
 
-        if(outputPath === currentReadPath) {
-            twCom.fn.toast('파일출력경로와 읽어오는 경로가 같을 수 없습니다.', 4000);
-            return false;
-        }
-
         var promises = [];
         for(var key in htmlList) {
             var htmlData = converterHtml(htmlList[key], converterData, blockData, configData.targetDir);
