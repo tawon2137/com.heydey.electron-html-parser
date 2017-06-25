@@ -182,6 +182,8 @@ module.exports = function (data, conData, blockMap, templatePath) {
     var fileName = data.fileName;
     var htmlList = [];
     var dataMap = null;
+    var outPrefix = 'z_';
+    var fileNameCheck = data.fileName.substr(0, 2);
     // for(var i = 0; i < conData.length; i++) {
     //     if(conData[i].fileName === fileName) {
     //         dataMap = conData[i];
@@ -191,12 +193,17 @@ module.exports = function (data, conData, blockMap, templatePath) {
     if(fileName === conData.fileName) {
         dataMap = conData;
     }
-    if(dataMap === null) {
+
+    if(dataMap === null && fileNameCheck.trim() !== outPrefix) {
        let html = converterCodeCheck(data.html, includeExp) ? includeHtml(data.html, templatePath) : data.html;
        let notConverterFileData = {};
-       notConverterFileData['out_' + data.fileName] = html;
+       notConverterFileData[outPrefix + data.fileName] = html;
        return [notConverterFileData];
+    }else if(dataMap === null) {
+       return [];
     }
+
+
     blockData = blockMap;
     var html = getSubCodeInsertData(data.html, dataMap, true);
     html = converterCodeCheck(html, includeExp) ? includeHtml(html, templatePath) : html;
@@ -207,7 +214,7 @@ module.exports = function (data, conData, blockMap, templatePath) {
         $ = cheerio.load(html,  { decodeEntities: false });
         htmlReturnValue = {};
         chainGlobalSubCodes(templateArr[i]);
-        htmlReturnValue['out_'+fileName] = htmlConvert($, templateArr[i]);
+        htmlReturnValue[outPrefix + fileName] = htmlConvert($, templateArr[i]);
         htmlList.push(htmlReturnValue);
     }
     return htmlList;
