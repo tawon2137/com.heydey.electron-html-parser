@@ -117,7 +117,7 @@
                 return false;
             }
             if(!fileData[name]) {
-                fileData[name] = htmlValue;
+                fileData[name.trim()] = htmlValue.trim();
             }else {
                 twCom.fn.toast('블록내에서 name의 값이 중복됩니다. 확인 후 다시시도해주세요', 5000);
                 return false;
