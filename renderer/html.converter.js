@@ -27,6 +27,7 @@ function repeatHtml(htmlData, num, propArr) {
     return htmlRepeatData + "@repeat";
 }
 
+
 function getSubCodeInsertData(htmlData, subCodeData, codeRemove, repeatNum) {
     var subCodeNames = getSubCodeKey(Object.keys(subCodeData || {}));
     if( !converterCodeCheck(htmlData) && subCodeData.length > 0 ) return htmlData;
@@ -48,7 +49,7 @@ function getSubCodeInsertData(htmlData, subCodeData, codeRemove, repeatNum) {
         }else if(subCodes[matches[i]]){
             subCodesValue = subCodes[matches[i]];
             if(regExp.test(subCodes[matches[i]])) {
-                subCodesValue = getSubCodeInsertData(subCodesValue, subCodeData.__proto__, true);
+                subCodesValue = getSubCodeInsertData(subCodesValue, subCodeData._global, true);
             }
             htmlData = htmlData.replace(matches[i], subCodesValue);
         }else {
@@ -112,6 +113,8 @@ function containerConverter($blockContainer, containerChilds) {
 }
 
 
+
+
 function converterCodeCheck(htmlData, argExp) {
     argExp = argExp ? argExp : regExp;
     var matches = htmlData.match(argExp);
@@ -147,16 +150,17 @@ function includeHtml(htmlData, dirPath) {
   }
   return htmlData;
 }
+
 function setSubCodePrototype(refObj, targetObj) {
     if(typeof targetObj !== 'object') {
         return false;
     }else if(!Array.isArray(targetObj)){
-        targetObj.__proto__ = refObj;
+        targetObj._global = refObj;
     }
 
     var keys = Object.keys(targetObj);
     for(var i = 0; i < keys.length; i++) {
-        if(targetObj.hasOwnProperty(keys[i]) && typeof targetObj[keys[i]] === "object") {
+        if(keys[i] !== "_global" && targetObj.hasOwnProperty(keys[i]) && typeof targetObj[keys[i]] === "object") {
             setSubCodePrototype(refObj, targetObj[keys[i]]);
         }
     }
@@ -188,7 +192,10 @@ module.exports = function (data, conData, blockMap, templatePath) {
         dataMap = conData;
     }
     if(dataMap === null) {
-        return [];
+       let html = converterCodeCheck(data.html, includeExp) ? includeHtml(data.html, templatePath) : data.html;
+       let notConverterFileData = {};
+       notConverterFileData[data.fileName] = html;
+       return [notConverterFileData];
     }
     blockData = blockMap;
     var html = getSubCodeInsertData(data.html, dataMap, true);

@@ -52,50 +52,53 @@ function viewHtmlFile(targetElement, dirName){
                 };
 
                 var card = document.createElement('div');
+                card.className = 'card col s12';
                 var content = document.createElement('div');
-                var action = document.createElement('div');
-                var title = document.createElement('div');
-                var htmlContent = document.createElement('div');
-                // var updateBtn = document.createElement('a'); 수정버튼 임시보류
-                var saveBtn = document.createElement('a');
-
-                card.classList.add('card');
-
-                content.classList.add('card-content');
-                title.classList.add('card-title');
-                action.classList.add('card-action');
-
-                htmlContent.classList.add('code-wrapper');
-                htmlContent.classList.add('modal-content');
-
-                title.textContent = file.path;
-
-
-                htmlContent.setAttribute('data-code-index', htmlList.length);
-
-                // updateBtn.className = 'tw-btn waves-effect indigo-d-3 white-text';
-                // updateBtn.textContent = '수정';
-                // updateBtn.setAttribute('data-target', 'updateModal');
-                // updateBtn.addEventListener('click', setEditHtml(htmlContent, htmlValue));
-
-
-                saveBtn.className = 'tw-btn waves-effect indigo-d-3 white-text';
-                saveBtn.textContent = '저장';
-                saveBtn.addEventListener('click', saveHtml(htmlContent));
-
-
-                content.appendChild(htmlContent);
-                action.appendChild(saveBtn);
-                card.appendChild(title);
+                content.className = 'card-content row';
+                content.innerHTML = `파일명 : ${fileNames[index]}<br>디렉토리 : ${dirName}`;
+                // var action = document.createElement('div');
+                // var title = document.createElement('div');
+                // var htmlContent = document.createElement('div');
+                // // var updateBtn = document.createElement('a'); 수정버튼 임시보류
+                // var saveBtn = document.createElement('a');
+                //
+                // card.classList.add('card');
+                //
+                // content.classList.add('card-content');
+                // title.classList.add('card-title');
+                // action.classList.add('card-action');
+                //
+                // htmlContent.classList.add('code-wrapper');
+                // htmlContent.classList.add('modal-content');
+                //
+                // title.textContent = file.path;
+                //
+                //
+                // htmlContent.setAttribute('data-code-index', htmlList.length);
+                //
+                // // updateBtn.className = 'tw-btn waves-effect indigo-d-3 white-text';
+                // // updateBtn.textContent = '수정';
+                // // updateBtn.setAttribute('data-target', 'updateModal');
+                // // updateBtn.addEventListener('click', setEditHtml(htmlContent, htmlValue));
+                //
+                //
+                // saveBtn.className = 'tw-btn waves-effect indigo-d-3 white-text';
+                // saveBtn.textContent = '저장';
+                // saveBtn.addEventListener('click', saveHtml(htmlContent));
+                //
+                //
+                // content.appendChild(htmlContent);
+                // action.appendChild(saveBtn);
+                // card.appendChild(title);
                 card.appendChild(content);
-                card.appendChild(action);
+                // card.appendChild(action);
                 targetElement.appendChild(card);
 
-                var codeArea = CodeMirror(htmlContent, mirrorOption);
-                codeArea.setValue(htmlValue);
-                file.mirror = codeArea;
+                // var codeArea = CodeMirror(htmlContent, mirrorOption);
+                // codeArea.setValue(htmlValue);
+                // file.mirror = codeArea;
+
                 htmlList.push(file);
-                twCom.form.reload();
             }
         });
         global.setHtmlList(htmlList);
