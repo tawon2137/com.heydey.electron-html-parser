@@ -13,7 +13,8 @@ function repeatHtml(htmlData, num, propArr) {
     var htmlRepeatData = '';
     var imsiString = '';
     var reg = new RegExp(`(${Object.keys(propArr).join('|')})`,'i');
-    var indexReg = new RegExp('{{_index}}','gim');
+    // var indexReg = new RegExp('{{_index}}','gim');
+    var indexReg = new RegExp('{{_index[0-9+\\-*/]*}}','gim');
     for(var i = 0; i < num; i++) {
       imsiString = htmlData;
         if(reg.test(htmlData)) {
@@ -22,7 +23,16 @@ function repeatHtml(htmlData, num, propArr) {
               imsiString = imsiString.replace(new RegExp(key, 'gim'), propArr[key][i] || '');
             }
         }
-      htmlRepeatData += imsiString.replace(indexReg, i);
+        // htmlRepeatData += imsiString.replace(indexReg, i);
+        var indexes = imsiString.match(indexReg);
+        if(indexes) {
+            for(var j=0; j<indexes.length; j++) {
+                var exp = indexes[j].replace(new RegExp('_index', 'gim'), 'i');
+                exp = exp.substr(2, exp.length-4);
+                imsiString = imsiString.replace(indexes[j], eval(exp));
+            }
+        }
+        htmlRepeatData += imsiString;
     }
     return htmlRepeatData + "@repeat";
 }
