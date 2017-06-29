@@ -10,7 +10,7 @@ var htmlList = [];
 
 global.createConfigFile = function () {
     if(!this.fileCheck(configFilePath)) {
-      var targetDir = path.join(__dirname, '../test-template');
+        var targetDir = path.join(__dirname, '../test-template');
         var config = this.returnPath(targetDir);
         config.outputDir = path.join(__dirname, '../output');
         this.saveConfigData(config);
@@ -119,7 +119,6 @@ global.jsonFileRead = function (filePath) {
         data = {};
         twCom.fn.toast(`${filePath}의 데이터가 JSON 양식이 아닙니다.`, 3000);
     }
-
     return data;
 };
 

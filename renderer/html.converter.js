@@ -63,7 +63,7 @@ function getSubCodeInsertData(htmlData, subCodeData, codeRemove, repeatNum) {
 
     return htmlData;
 }
-function twoDimensionalCheck(array, dimensional) {
+function twoDimensionalCheck(array) {
   var bool = true;
       for(var i = 0; i < array.length; i++) {
         if(Array.isArray(array[i])) {
@@ -208,6 +208,7 @@ module.exports = function (data, conData, blockMap, templatePath) {
     var html = getSubCodeInsertData(data.html, dataMap, true);
     html = converterCodeCheck(html, includeExp) ? includeHtml(html, templatePath) : html;
     var templateArr = dataMap.outFiles;
+
     var $,fileName, htmlReturnValue;
     for(var i = 0; i < templateArr.length; i++) {
         fileName = templateArr[i].out;
